@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Video Workbench",
+    "description": "An agent-native video workbench: the conversation and the editor share one project document, and every agent edit lands on the same timeline."
+  }
+}

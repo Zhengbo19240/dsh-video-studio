@@ -1,0 +1,63 @@
+{
+  "title": "字距描边结晶（近似）",
+  "kind": "motion",
+  "kindClass": "文字",
+  "category": "opening",
+  "tags": [
+    "opening",
+    "低（静谧仪式感，一次呼吸完成）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/opening/letterspace-materialize.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "大字距字标全字符并行「描边」生长——所有字母同帧起笔、轮廓线连续画满、同帧齐收成词；氛围底景上的品牌字标显影。（近似：描的是字形轮廓，不是单线骨架，所以没有手写单笔的收笔感）",
+  "duration": 3.8,
+  "feasibility": "rewrite",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.481Z",
+  "calibrationMinutes": 0.58,
+  "calibrationNote": "字距由松收紧，素材填进字形",
+  "generatedAt": "2026-11-06T05:37:40.481Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:03.950Z",
+  "render": {
+    "fingerprint": "1793945002630:10228",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "verdict": "approximate",
+  "verdictReason": "Canvas2D 拿不到字体骨架笔画，只能描字形轮廓；「单线结晶」的手写感掉一档，2026-11-06 决定不救，改名为它能做到的事并写清差在哪。",
+  "limitations": [
+    "描的是字形轮廓（一圈回路），不是单线骨架笔画；放大能看到「描边」，不是「一笔写完」",
+    "没有笔顺与收笔：所有字符同速画完，读得出程序感",
+    "非拉丁字符同样是轮廓描边，没有做汉字笔顺",
+    "底景是程序画的暮色山形；给 assetId 会整体替换成素材"
+  ],
+  "honestyCheckedAt": "2026-11-06T08:33:31.625Z",
+  "honestyScope": "2026-11-06 诚实性复核（修好/降级/标废三选一）"
+}

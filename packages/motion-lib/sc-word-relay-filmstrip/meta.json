@@ -1,0 +1,53 @@
+{
+  "title": "词接力胶片条",
+  "kind": "motion",
+  "kindClass": "文字",
+  "category": "typography",
+  "tags": [
+    "typography",
+    "中低（编辑部气质，节奏靠切词的\"咔哒\"感）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/typography/word-relay-filmstrip.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "左列黑白相间等高页面卡步进滚动（焦点卡全亮、邻卡离焦压暗）、右侧衬线大词原位接力（名词恒定+动词轮换）——切词瞬间才滚动一格，词块垂直中心与当前页面卡中点精确对齐",
+  "duration": 4,
+  "feasibility": "rewrite",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.494Z",
+  "calibrationMinutes": 0.78,
+  "calibrationNote": "胶片条横向滚动接词",
+  "generatedAt": "2026-11-06T05:37:40.494Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:24.335Z",
+  "render": {
+    "fingerprint": "1793944979375:13962",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

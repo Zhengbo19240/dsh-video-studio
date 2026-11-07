@@ -1,0 +1,20 @@
+{
+  "title": "黑胶唱机",
+  "kind": "motion",
+  "tags": [
+    "音乐",
+    "黑胶",
+    "复古"
+  ],
+  "source": "vibe-motion/skills · remotion-vinyl-player（原生移植）",
+  "license": "MIT（上游）",
+  "description": "旋转唱片 + 唱臂落下 + 波形。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:11.591Z",
+  "render": {
+    "fingerprint": "1793858058283:1347",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "title": "beat-cut-moves",
+  "kind": "motion",
+  "tags": [
+    "rhythm",
+    "高"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/rhythm/beat-cut-moves.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "硬切当节拍乐器——连闪定格：三次白闪各硬切同一画面的一个裁切（全景→卡片→特写），快门余韵沉降后停在特写收束",
+  "duration": 4.7,
+  "feasibility": "direct",
+  "kindClass": "几何",
+  "category": "rhythm",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-05T15:08:00.462Z",
+  "generatedBy": "tools/convert.mjs",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "subject": {
+        "type": "string",
+        "enum": [
+          "card",
+          "figure"
+        ],
+        "default": "card",
+        "description": "合并参数：card = 原抽象卡片画面（白闪 + 快门下沉）；figure = 人物剪影画面（三级跳切 + 残影框 + 推近刻度）。"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-05T15:39:42.953Z",
+  "calibrationNote": "第二批（几何+转场）人工重写为 Canvas2D 纯函数；契约 render(ctx,t,env)，props 均带默认值与边界夹取。",
+  "codeContract": "export function render(ctx, t, env)",
+  "batch": 2,
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:14.212Z",
+  "render": {
+    "fingerprint": "1793892556792:7276",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "mergedFrom": [
+    "sc-rhythm-interrupt-moves"
+  ],
+  "mergeNote": "2026-11-06 合并：subject 两种形态；sc-rhythm-interrupt-moves 已并入本卡（subject: 'figure'），新调用请用本卡。"
+}

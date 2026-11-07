@@ -1,0 +1,21 @@
+{
+  "name": "dsh-video-suite",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "DSH 的视频工作台、阶段机、动效库与音效索引 —— 一个工程文档，对话与界面共用",
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm run build --workspace dsh-video-workbench",
+    "build:watch": "npm run build:watch --workspace dsh-video-workbench",
+    "test": "npm run test --workspace dsh-video-brief",
+    "test:table": "node packages/video-table/scripts/smoke.mjs",
+    "sounds:download": "node packages/sound-library/scripts/download-sounds.mjs"
+  },
+  "license": "MIT"
+}

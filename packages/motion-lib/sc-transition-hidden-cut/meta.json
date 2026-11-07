@@ -1,0 +1,80 @@
+{
+  "title": "transition-hidden-cut",
+  "kind": "motion",
+  "tags": [
+    "transition",
+    "中高（需要切点两侧的画面）"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/transition/transition-hidden-cut.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "藏切点三式里的「暖色漏光」：一条高光带扫过画面，换镜头的边界就是光带本身，硬切藏在光带最亮的 1-2 帧里；尘点与细光轴跨切点连续。无邻帧时降级为一次纯漏光扫过，不崩。",
+  "duration": 2.2,
+  "feasibility": "rewrite",
+  "kindClass": "转场",
+  "category": "transition",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-06T05:40:00Z",
+  "generatedBy": "manual:transition-host",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "angle": {
+        "type": "number",
+        "minimum": -80,
+        "maximum": 80,
+        "description": "光带倾角（度）"
+      },
+      "band": {
+        "type": "number",
+        "minimum": 0.03,
+        "maximum": 0.6,
+        "description": "光带宽度（占对角线比例）"
+      },
+      "sweep": {
+        "type": "number",
+        "minimum": 0.12,
+        "description": "扫过全屏所需秒数（以 cutAt 为中心）"
+      },
+      "tint": {
+        "type": "string",
+        "description": "冷光色"
+      },
+      "warm": {
+        "type": "string",
+        "description": "暖光色"
+      },
+      "dots": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 12,
+        "description": "尘点数量"
+      },
+      "debug": {
+        "type": "boolean",
+        "description": "画出 cutAt 与降级原因（调试用）"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-06T05:40:00Z",
+  "calibrationNote": "读 env.transition.cutAt / prev.frame() / next.frame()；换画面的边界与光带中心绑定，因此切换发生在光带最亮处。缺任一邻帧都走降级分支。",
+  "codeContract": "export function render(ctx, t, env); export const transitionNeeds = () => ({prev,next})",
+  "batch": 2,
+  "rewrittenFrom": "skip",
+  "rewriteNote": "原卡三式（前景遮挡 / 对撞开屏 / 暖色漏光）里取「暖色漏光」用宿主上下文重写；另外两式需要被遮挡物的合成帧，未做。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:21.116Z",
+  "render": {
+    "fingerprint": "1793944063052:9682",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

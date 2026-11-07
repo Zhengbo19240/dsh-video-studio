@@ -1,0 +1,20 @@
+{
+  "title": "尺子进度条",
+  "kind": "motion",
+  "tags": [
+    "进度",
+    "数据",
+    "尺子"
+  ],
+  "source": "vibe-motion/skills · ruler-progress-render（原生移植）",
+  "license": "MIT（上游）",
+  "description": "横向刻度尺 + 指针推进 + 百分比数字。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:11.603Z",
+  "render": {
+    "fingerprint": "1793858058267:1182",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

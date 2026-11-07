@@ -1,0 +1,42 @@
+{
+  "title": "sakuga-timing-shift",
+  "kind": "motion",
+  "tags": [
+    "rhythm",
+    "中高"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/rhythm/sakuga-timing-shift.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "一拍三转一拍一——元素先以每 3 帧一步的手翻书顿挫移动，高潮瞬间切成逐帧丝滑冲刺，帧率量化的突变本身就是看点",
+  "duration": 5,
+  "feasibility": "direct",
+  "kindClass": "几何",
+  "category": "rhythm",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-05T15:08:00.464Z",
+  "generatedBy": "tools/convert.mjs",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-05T15:39:42.953Z",
+  "calibrationNote": "第二批（几何+转场）人工重写为 Canvas2D 纯函数；契约 render(ctx,t,env)，props 均带默认值与边界夹取。",
+  "codeContract": "export function render(ctx, t, env)",
+  "batch": 2,
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:26.903Z",
+  "render": {
+    "fingerprint": "1793893974669:8280",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

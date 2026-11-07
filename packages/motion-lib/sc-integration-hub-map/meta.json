@@ -1,0 +1,63 @@
+{
+  "title": "集成枢纽图",
+  "kind": "motion",
+  "kindClass": "几何",
+  "category": "ui-entrance",
+  "tags": [
+    "ui-entrance",
+    "中高（翻面是爆点，输送段是余韵）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/ui-entrance/integration-hub-map.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "旧页面一次性快翻 180°（翻面期间逐竖条做透视投影、右缘比左缘宽，侧棱露出页厚并在 90° 时刻闪一下）落成新中枢页，五个集成 app 图标同帧弹现、随即五条彩虹光管同帧齐连，光管内输送脉冲持续流动——「翻开新一页，生态一齐接入」。",
+  "duration": 4.4,
+  "feasibility": "skip",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.480Z",
+  "calibrationMinutes": 0.99,
+  "calibrationNote": "中心素材节点 + 轨道节点 + 连线生长",
+  "generatedAt": "2026-11-06T05:37:40.480Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T08:39:31.121Z",
+  "render": {
+    "fingerprint": "1793954342462:19036",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "verdict": "fixed",
+  "verdictReason": "旧版翻面是整页 scaleX(|cos|) + 背面镜像的仿射近似，前后等宽、没有近大远小，侧棱只有一条光带；2026-11-06 改为逐竖条投影（x′=x·cosθ·d/(d−x·sinθ)）+ 有厚度的侧棱面。",
+  "limitations": [
+    "翻面是「投影 + 40 条竖带贴图」的 2D 近似，不是真 3D 引擎；极近特写下条带接缝可能有极细竖纹",
+    "背面页是预镜像绘制后在 90° 附近切换的，不是双面独立渲染",
+    "侧棱是厚度色带 + 高光，不是真实的纸厚光照",
+    "图标是几何近似，不是真品牌 logo"
+  ],
+  "honestyCheckedAt": "2026-11-06T08:33:31.625Z",
+  "honestyScope": "2026-11-06 诚实性复核（修好/降级/标废三选一）"
+}

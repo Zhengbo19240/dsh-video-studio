@@ -1,0 +1,20 @@
+# DSH bundle 补丁：把 dsh-video-brief 插进 profile 的插件表。
+#
+# name 必须与包名一致，加载器才认得 profile 的 node_modules 里的它。
+# 注意：Cordis 的 config 是「整份替换」而不是合并，所以要改值就照抄整块再改。
+#
+# 只做 host 侧（11 个工具 + 阶段门禁 + 一段提示），没有 client bundle，不刷新页面。
+- insert:
+    - id: dsh-video-brief
+      name: 'dsh-video-brief'
+      config:
+        # off / warn / enforce
+        #   warn（默认）= 只记日志不拦，装上不会锁死任何操作
+        #   enforce     = 按阶段矩阵真拒绝：补 brief → 写脚本并让用户确认 → 确认风格 → 改写时间线 → 进 build 才能导出
+        gate: warn
+        # 追问轮数上限（1-20）。轮数到顶也不会自动放行——10 个槽位缺一不可。
+        maxRounds: 6
+        # 槽位覆盖：按 id 打补丁，不整份替换。留空 = 用内置 10 个。
+        # 例：- { id: goal, question: '这次片子想让人记住哪一句？', priority: 5 }
+        #     - { id: reference, remove: true }
+        slots: []

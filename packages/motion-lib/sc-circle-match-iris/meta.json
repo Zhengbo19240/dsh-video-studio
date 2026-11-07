@@ -1,0 +1,86 @@
+{
+  "title": "circle-match-iris",
+  "kind": "motion",
+  "tags": [
+    "transition",
+    "中高（需要切点两侧的画面）"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/transition/circle-match-iris.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "圆心匹配光圈切——光圈从旧画面里圆形元素的圆心炸开，圈内新画面的圆形元素接在同一个圆心；依靠宿主上下文取到切点两侧的真实画面。无邻帧时降级为普通光圈/扫光，不崩。",
+  "duration": 2.4,
+  "feasibility": "rewrite",
+  "kindClass": "转场",
+  "category": "transition",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-06T05:40:00Z",
+  "generatedBy": "manual:transition-host",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "cx": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1,
+        "description": "圆心横坐标（画面归一化）"
+      },
+      "cy": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1,
+        "description": "圆心纵坐标（画面归一化）"
+      },
+      "expand": {
+        "type": "number",
+        "minimum": 0.08,
+        "description": "切点后光圈扩散到满屏所需秒数"
+      },
+      "ring": {
+        "type": "number",
+        "minimum": 0,
+        "description": "光圈描边宽度（占短边比例）"
+      },
+      "tint": {
+        "type": "string",
+        "description": "光圈颜色"
+      },
+      "dim": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1,
+        "description": "圈外压暗量"
+      },
+      "ease": {
+        "type": "number",
+        "minimum": 1,
+        "description": "扩散缓动指数"
+      },
+      "debug": {
+        "type": "boolean",
+        "description": "画出 cutAt 与降级原因（调试用）"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-06T05:40:00Z",
+  "calibrationNote": "按 docs/transition-host.md 的宿主上下文契约重写：读 env.transition.cutAt / prev.frame() / next.frame()；两侧缺一即降级，不抛错、不读像素。",
+  "codeContract": "export function render(ctx, t, env); export const transitionNeeds = () => ({prev,next})",
+  "batch": 2,
+  "rewrittenFrom": "skip",
+  "rewriteNote": "原卡因「需要前后两镜上下文」被标 skip；本版用 env.transition 补齐上下文，圆心由 props.cx/cy 指定（不做逐像素圆检测）。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:06:55.925Z",
+  "render": {
+    "fingerprint": "1793943810490:10284",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

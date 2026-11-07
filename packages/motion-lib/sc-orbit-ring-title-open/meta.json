@@ -1,0 +1,63 @@
+{
+  "title": "轨道环开场",
+  "kind": "motion",
+  "kindClass": "文字",
+  "category": "opening",
+  "tags": [
+    "opening",
+    "中（唯一的持续运动是匀速公转，全片只有马克块横扫一次冲击）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/opening/orbit-ring-title-open.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "石墨暗场上暗色内容卡按均布在椭圆上匀速公转（卡身永不倾斜，纵深只由 sin θ 给出缩放、z 序与远处压暗失焦），环撑开期间卡内容冻结首帧、之后一起开播；居中两级标题逐字解糊下沉落定，关键词到位那一刻荧光马克块自左横扫铺满、扫过处字反白为墨。环上张数按素材数自适应：0 条 → 8 张占位，1–3 条 → 4 张（素材各一张 + 互不相同的占位卡），4–7 条 → 有几条上几张，≥8 条 → 8 张。",
+  "duration": 4.6,
+  "feasibility": "rewrite",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.485Z",
+  "calibrationMinutes": 0.8,
+  "calibrationNote": "多层椭圆轨道 + 中心圆形素材窗口",
+  "generatedAt": "2026-11-06T05:37:40.485Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T08:39:31.120Z",
+  "render": {
+    "fingerprint": "1793953801764:18199",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "verdict": "fixed",
+  "verdictReason": "旧版写死 8 张卡、只给一条素材时拿同一张图切 4×2 个区域重复八次，读作「同一张图在转」；2026-11-06 改为按素材数自适应张数，缺素材时用互不相同的占位卡。",
+  "limitations": [
+    "素材少于 8 条时，环上是「素材卡 + 占位卡」混排；占位卡是程序画的假页面，不是第 5–8 个真产品画面",
+    "素材 1–3 条时环上只有 4 张，比原片的 8 张稀疏",
+    "素材卡不会各自播放视频：只画静态图或已解码帧",
+    "每条素材只上一张卡，不再靠切图凑数（这正是修掉的问题）"
+  ],
+  "honestyCheckedAt": "2026-11-06T08:33:31.625Z",
+  "honestyScope": "2026-11-06 诚实性复核（修好/降级/标废三选一）"
+}

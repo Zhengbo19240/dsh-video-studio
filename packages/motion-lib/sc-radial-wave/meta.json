@@ -1,0 +1,41 @@
+{
+  "title": "radial-wave",
+  "kind": "motion",
+  "tags": [
+    "ui-entrance",
+    "中高（起手爆发一次，波前过后转为常亮低能量底子）"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/ui-entrance/radial-wave.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "17×9 圆点阵列按到波源的欧氏距离错峰点亮，每点 scale 过冲到 1.5 再落回常亮，第一道波扫完后第二道亮蓝脉冲从外圈反向收拢回中心",
+  "duration": 3.8,
+  "feasibility": "direct",
+  "kindClass": "几何",
+  "category": "ui-entrance",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-05T14:58:30.233Z",
+  "generatedBy": "tools/convert.mjs",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-05T23:06:49.0810775+08:00",
+  "calibrationMinutes": 1.45,
+  "calibrationNote": "人工按配方卡重写为 Canvas2D 纯函数；耗时与难点见 tools/recipes/EVALUATION.md",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:24.255Z",
+  "render": {
+    "fingerprint": "1793891185400:4171",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

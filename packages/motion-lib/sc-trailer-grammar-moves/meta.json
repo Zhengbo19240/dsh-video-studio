@@ -1,0 +1,42 @@
+{
+  "title": "trailer-grammar-moves",
+  "kind": "motion",
+  "tags": [
+    "rhythm",
+    "A 高"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/rhythm/trailer-grammar-moves.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "预告片语法一式——trailer-bumper 前置速剪钩子：三镜 9f 速剪 + 黑场静默一拍，再开场标题",
+  "duration": 4.7,
+  "feasibility": "direct",
+  "kindClass": "几何",
+  "category": "rhythm",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-05T15:08:00.465Z",
+  "generatedBy": "tools/convert.mjs",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-05T15:39:42.953Z",
+  "calibrationNote": "第二批（几何+转场）人工重写为 Canvas2D 纯函数；契约 render(ctx,t,env)，props 均带默认值与边界夹取。",
+  "codeContract": "export function render(ctx, t, env)",
+  "batch": 2,
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:29.592Z",
+  "render": {
+    "fingerprint": "1793893001195:8722",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

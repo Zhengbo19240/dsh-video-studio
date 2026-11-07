@@ -1,0 +1,53 @@
+{
+  "title": "瀑布墙",
+  "kind": "motion",
+  "kindClass": "几何",
+  "category": "ui-entrance",
+  "tags": [
+    "ui-entrance",
+    "中（流动陈列型）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/ui-entrance/page-waterfall-wall.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "页面瀑布墙——真实页面截图切成 3–4 列在 3D 后仰墙面上差速反向无限滚动，视差 + 镜头缓推做\"内容多到流不完\"的一览",
+  "duration": 3.8,
+  "feasibility": "skip",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "image",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.486Z",
+  "calibrationMinutes": 0.54,
+  "calibrationNote": "多列瀑布错峰下落，只有一列是素材",
+  "generatedAt": "2026-11-06T05:37:40.486Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:09.613Z",
+  "render": {
+    "fingerprint": "1793944948999:9467",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

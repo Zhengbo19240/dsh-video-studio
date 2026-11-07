@@ -1,0 +1,20 @@
+{
+  "title": "扫光",
+  "kind": "motion",
+  "tags": [
+    "光效",
+    "转场",
+    "高光"
+  ],
+  "source": "vibe-motion/skills（视觉参考）",
+  "license": "自研实现",
+  "description": "一条斜向高光扫过画面，用于标题强调或转场收束。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:32.646Z",
+  "render": {
+    "fingerprint": "1793856426171:700",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

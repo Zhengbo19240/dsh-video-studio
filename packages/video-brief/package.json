@@ -1,0 +1,43 @@
+{
+  "name": "dsh-video-brief",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "DSH 插件（仅 host 侧）：视频任务的六阶段状态机（idle/clarify/script/style/locked/build）+ 10 槽位简报 + 分镜脚本确认 + 风格确认 + 按阶段门禁 —— 脚本没确认，不许渲染样片；风格没锁，时间线不许动；没进 build，不许导出",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "src/**/*.mjs",
+    "cordis.patch.yml",
+    "test/**/*.mjs",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node test/brief.test.mjs && node test/script-stage-test.mjs"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "dsh",
+    "deepseek-harness",
+    "video",
+    "简报",
+    "需求确认",
+    "视频脚本",
+    "分镜",
+    "门禁"
+  ],
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

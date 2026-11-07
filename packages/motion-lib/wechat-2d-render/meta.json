@@ -1,0 +1,20 @@
+{
+  "title": "聊天动画",
+  "kind": "motion",
+  "tags": [
+    "UI",
+    "对话",
+    "社媒"
+  ],
+  "source": "vibe-motion/skills · wechat-2d-render（原生移植）",
+  "license": "MIT（上游）",
+  "description": "气泡逐条弹出 + 头像 + 时间戳。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:30:14.538Z",
+  "render": {
+    "fingerprint": "1793858058287:1765",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

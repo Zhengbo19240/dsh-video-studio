@@ -1,0 +1,63 @@
+{
+  "title": "贴面飞掠（近似）",
+  "kind": "motion",
+  "kindClass": "几何",
+  "category": "camera",
+  "tags": [
+    "camera",
+    "中高（运镜持续推进+元素连续落位，信息密度高）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/camera/graze-face-tour.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "大倾角贴面游走——镜头贴着界面低飞掠过（侧栏树/顶栏/列表当地形），页面文字初始悬浮在界面上空带同形软影，随镜头行进先后加速贴落回界面。（近似：斜切 + 纵向压缩模拟倾角，没有真透视）",
+  "duration": 4,
+  "feasibility": "skip",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.478Z",
+  "calibrationMinutes": 0.66,
+  "calibrationNote": "极近景横移 + 暗角 + 轻微滚转",
+  "generatedAt": "2026-11-06T05:37:40.478Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:01.414Z",
+  "render": {
+    "fingerprint": "1793944948999:11022",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "verdict": "approximate",
+  "verdictReason": "大倾角贴面飞掠用 rotate + 斜切 + 纵向压缩做仿射近似，没有近大远小，纵深感比原片弱一档；2026-11-06 决定不救，改名并写清差在哪。",
+  "limitations": [
+    "倾角是仿射近似（rotate + 斜切 + 纵向压缩），没有近大远小：画面上下两端物件一样大，纵深感比原片弱一档",
+    "贴面元素是平面文字，不随镜头产生视差；景深只是向下渐深的暗雾",
+    "贴面缘光是一条叠加渐变，不随界面纹理变化",
+    "地形是程序画的侧栏/列表；给 assetId 用整页截图平铺，不做真 3D 地形"
+  ],
+  "honestyCheckedAt": "2026-11-06T08:33:31.625Z",
+  "honestyScope": "2026-11-06 诚实性复核（修好/降级/标废三选一）"
+}

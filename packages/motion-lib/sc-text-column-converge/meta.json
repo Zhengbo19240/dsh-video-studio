@@ -1,0 +1,53 @@
+{
+  "title": "文字列汇聚",
+  "kind": "motion",
+  "kindClass": "文字",
+  "category": "typography",
+  "tags": [
+    "typography",
+    "中低（机器节奏、小字规格清单气质，不是砸字）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/typography/text-column-converge.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "双词对峙合拢——左\"NEW\"右特性词钉死在等屏边距两侧硬切轮换、全程零收缩，换到最后一词才唯一一次 ease-in-out 滑到居中咬合成短语，下方小字近乎硬切浮现；收尾揭晓型文字卡",
+  "duration": 3.6,
+  "feasibility": "rewrite",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.492Z",
+  "calibrationMinutes": 0.47,
+  "calibrationNote": "两列字符向中间汇聚，素材从缝里长出",
+  "generatedAt": "2026-11-06T05:37:40.492Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:18.137Z",
+  "render": {
+    "fingerprint": "1793944948999:8573",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

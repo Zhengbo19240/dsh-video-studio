@@ -1,0 +1,26 @@
+{
+  "name": "@dsh-video/sound-library",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "音效声学索引（753 条）+ Kenney CC0 音效包下载脚本；不包含音频二进制",
+  "files": [
+    "index.json",
+    "scripts/**/*.mjs",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "download": "node scripts/download-sounds.mjs"
+  },
+  "keywords": [
+    "dsh",
+    "sound",
+    "kenney",
+    "cc0",
+    "音效"
+  ],
+  "license": "MIT"
+}

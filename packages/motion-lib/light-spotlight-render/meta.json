@@ -1,0 +1,20 @@
+{
+  "title": "聚光灯扫字",
+  "kind": "motion",
+  "tags": [
+    "光效",
+    "文字",
+    "标题"
+  ],
+  "source": "vibe-motion/skills · light-spotlight-render（原生移植）",
+  "license": "MIT（上游）",
+  "description": "灯光左右摆动，文字只在光锥内显形。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:06.552Z",
+  "render": {
+    "fingerprint": "1793857225045:1459",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

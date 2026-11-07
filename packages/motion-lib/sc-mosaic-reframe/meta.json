@@ -1,0 +1,42 @@
+{
+  "title": "mosaic-reframe",
+  "kind": "motion",
+  "tags": [
+    "transition",
+    "中（连续流动的重排，无爆点，气质从容）"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/transition/mosaic-reframe.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "12 张瓦片在规则网格、feature mosaic、对角瀑布串三种排版间连续变形，位置宽高各自插值、逐片微错峰，段间留 hold",
+  "duration": 7.13,
+  "feasibility": "direct",
+  "kindClass": "转场",
+  "category": "transition",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-05T15:08:00.467Z",
+  "generatedBy": "tools/convert.mjs",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-05T15:39:42.953Z",
+  "calibrationNote": "第二批（几何+转场）人工重写为 Canvas2D 纯函数；契约 render(ctx,t,env)，props 均带默认值与边界夹取。",
+  "codeContract": "export function render(ctx, t, env)",
+  "batch": 2,
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:21.704Z",
+  "render": {
+    "fingerprint": "1793893307399:8803",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "title": "合影尾声",
+  "kind": "motion",
+  "kindClass": "文字",
+  "category": "outro",
+  "tags": [
+    "outro",
+    "峰值（全片最高点）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/outro/outro-group-photo-launch.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "全片元素从四面八方飞来围住字标合影，crane 落机位+舞台光+金尘做成发布会收场",
+  "duration": 4.2,
+  "feasibility": "skip",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "image",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.486Z",
+  "calibrationMinutes": 0.95,
+  "calibrationNote": "相框合影 + 署名 + 收尾出口",
+  "generatedAt": "2026-11-06T05:37:40.486Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:09.613Z",
+  "render": {
+    "fingerprint": "1793944948999:16857",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

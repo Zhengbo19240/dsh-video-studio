@@ -1,0 +1,53 @@
+{
+  "title": "井号变胶囊",
+  "kind": "motion",
+  "kindClass": "几何",
+  "category": "interaction",
+  "tags": [
+    "interaction",
+    "中（干脆利落，靠硬切给劲，不靠弹跳）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/interaction/hashtag-to-pill-materialize.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "话题词打字实体化——居中打出 \"#word\"（红实心光标恒亮），1 帧硬切变成宽大胶囊标签，hold 后缩小左移落到页面标签位，再 1 帧硬切揭示成品页；\"两次硬切一次滑动\"的节奏骨架",
+  "duration": 3.6,
+  "feasibility": "rewrite",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.479Z",
+  "calibrationMinutes": 0.7,
+  "calibrationNote": "# 字符塌缩成胶囊轮廓，素材从胶囊里显影",
+  "generatedAt": "2026-11-06T05:37:40.479Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:01.394Z",
+  "render": {
+    "fingerprint": "1793944948999:11621",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

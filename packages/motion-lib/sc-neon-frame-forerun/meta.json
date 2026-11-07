@@ -1,0 +1,53 @@
+{
+  "title": "霓虹边框先行",
+  "kind": "motion",
+  "kindClass": "几何",
+  "category": "ui-entrance",
+  "tags": [
+    "ui-entrance",
+    "中高（三层动作叠进，但都服务同一次登场）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/ui-entrance/neon-frame-forerun.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "强透视直角霓虹框自左缘两头奔画先行成型，页面在框内由暗转亮，同时框内组件/文字从 3D 上空带同形软影错峰贴落、随页面点亮同步完成贴合，背景霓虹群（demo 为同形框纵深回声隧道）终段熄灭让位",
+  "duration": 4,
+  "feasibility": "skip",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.485Z",
+  "calibrationMinutes": 1.04,
+  "calibrationNote": "霓虹边框逐边描出后素材才入画",
+  "generatedAt": "2026-11-06T05:37:40.485Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:06.636Z",
+  "render": {
+    "fingerprint": "1793944948999:17288",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

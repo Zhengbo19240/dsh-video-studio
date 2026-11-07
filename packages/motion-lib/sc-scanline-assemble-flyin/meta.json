@@ -1,0 +1,44 @@
+{
+  "title": "scanline-assemble-flyin",
+  "kind": "motion",
+  "tags": [
+    "effects",
+    "中高（扫描线是稳的，但每次组件飞入都是一个爆点，密度递进）"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/effects/scanline-assemble-flyin.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "页面开场是一张只有网格与虚线槽位的蓝图画板，一条亮扫描线自上而下掠过；扫到每个槽位，该处组件就从画外飞入过冲贴合，带方向性残影模糊与落位咬合角标——扫完整页恰好装配完成",
+  "duration": 5.2,
+  "feasibility": "direct",
+  "kindClass": "几何",
+  "category": "effects",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-05T15:39:42.953Z",
+  "generatedBy": "tools/convert.mjs",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-05T15:39:42.953Z",
+  "calibrationNote": "第二批（几何+转场）人工重写为 Canvas2D 纯函数；契约 render(ctx,t,env)，props 均带默认值与边界夹取。",
+  "codeContract": "export function render(ctx, t, env)",
+  "batch": 2,
+  "rewrittenFrom": "rewrite",
+  "rewriteNote": "原卡依赖 CSS blur/mask 合成特性，已用 Canvas2D 手写等价实现（见 code.js 头部改动声明）。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:26.903Z",
+  "render": {
+    "fingerprint": "1793893114555:9679",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

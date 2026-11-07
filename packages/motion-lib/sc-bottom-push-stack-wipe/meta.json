@@ -1,0 +1,45 @@
+{
+  "title": "bottom-push-stack-wipe",
+  "kind": "motion",
+  "tags": [
+    "transition",
+    "中"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/transition/bottom-push-stack-wipe.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "底边上推换章——新场景连底色整屏从底边向上推入，把旧场景物理顶出画外，连推数章各配一种饱和底色，内容钉死在各自色底坐标系里随底色走",
+  "duration": 5.7,
+  "feasibility": "direct",
+  "kindClass": "转场",
+  "category": "transition",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-05T15:08:00.466Z",
+  "generatedBy": "tools/convert.mjs",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-05T15:39:42.953Z",
+  "calibrationNote": "第二批（几何+转场）人工重写为 Canvas2D 纯函数；契约 render(ctx,t,env)，props 均带默认值与边界夹取。",
+  "codeContract": "export function render(ctx, t, env)",
+  "batch": 2,
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:14.120Z",
+  "render": {
+    "fingerprint": "1793892671688:7700",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "verdict": "merged-into",
+  "mergedInto": "sc-page-turn-transitions",
+  "mergeNote": "已并入 sc-page-turn-transitions，新的调用请用 sc-page-turn-transitions（mode: 'push'）。code.js 保留作兜底，未删除。"
+}

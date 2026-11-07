@@ -1,0 +1,40 @@
+export const meta = { title: '聊天动画', duration: 4 };
+export function render(ctx, t, env) {
+  const w = env.width, h = env.height;
+  ctx.save();
+  ctx.fillStyle = env.props.bg || '#111214'; ctx.fillRect(0, 0, w, h);
+  const msgs = (env.props.messages && env.props.messages.length ? env.props.messages : ['在吗', '视频剪好了吗', '发你了，看下音轨', '收到']).slice(0, 4);
+  const per = 0.7, start = h * 0.18, gap = h * 0.19;
+  ctx.textBaseline = 'middle';
+  msgs.forEach((text, i) => {
+    const appear = t - i * per;
+    if (appear <= 0) return;
+    const k = Math.min(1, appear / 0.25);
+    const mine = i % 2 === 1;
+    const bw = Math.min(w * 0.62, w * 0.06 + String(text).length * w * 0.028);
+    const bx = mine ? w - w * 0.08 - bw : w * 0.16;
+    const by = start + i * gap;
+    ctx.globalAlpha = k;
+    ctx.fillStyle = mine ? '#95ec69' : '#2a2d33';
+    const r = h * 0.028;
+    ctx.beginPath();
+    ctx.moveTo(bx + r, by);
+    ctx.arcTo(bx + bw, by, bx + bw, by + h * 0.1, r);
+    ctx.arcTo(bx + bw, by + h * 0.1, bx, by + h * 0.1, r);
+    ctx.arcTo(bx, by + h * 0.1, bx, by, r);
+    ctx.arcTo(bx, by, bx + bw, by, r);
+    ctx.fill();
+    ctx.fillStyle = mine ? '#10130f' : '#e8e8ea';
+    ctx.font = Math.round(h * 0.045) + 'px system-ui, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(String(text), bx + w * 0.02, by + h * 0.05);
+    ctx.fillStyle = '#4f8cff';
+    ctx.beginPath(); ctx.arc(mine ? w - w * 0.04 : w * 0.08, by + h * 0.05, h * 0.032, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 1;
+  });
+  ctx.fillStyle = 'rgba(255,255,255,.35)';
+  ctx.font = Math.round(h * 0.03) + 'px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(env.props.time || '12:30', w / 2, h * 0.08);
+  ctx.restore();
+}

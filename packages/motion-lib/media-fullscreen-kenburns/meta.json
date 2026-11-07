@@ -1,0 +1,20 @@
+{
+  "title": "全屏缓慢推镜（媒体）",
+  "kind": "motion",
+  "tags": [
+    "媒体",
+    "全屏",
+    "推镜"
+  ],
+  "source": "自研实现",
+  "license": "自研实现",
+  "description": "把 props.assetId 指向的视频铺满画面并缓慢放大 1.0→1.08；素材缺失时画占位底。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:06.409Z",
+  "render": {
+    "fingerprint": "1793890334556:2864",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

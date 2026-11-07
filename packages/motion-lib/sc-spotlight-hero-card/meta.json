@@ -1,0 +1,56 @@
+{
+  "title": "聚光英雄卡",
+  "kind": "motion",
+  "kindClass": "文字",
+  "category": "opening",
+  "tags": [
+    "opening",
+    "中（质感最高的一镜，节奏慢而稳）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/opening/spotlight-hero-card.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "关灯的剧场里一束钨丝聚光（带体积光柱）扫过页面锁定一张卡，斜侧推进后卡片弹起悬浮、香槟色光束沿轮廓两圈、连同 3D 注记一起贴回原位",
+  "duration": 5,
+  "feasibility": "skip",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "image",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.488Z",
+  "calibrationMinutes": 1.08,
+  "calibrationNote": "锥形聚光罩住素材卡，缓慢推近",
+  "generatedAt": "2026-11-06T05:37:40.488Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:15.184Z",
+  "render": {
+    "fingerprint": "1793944948999:19048",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "verdict": "merged-into",
+  "mergedInto": "sc-spotlight-sweep-moves",
+  "mergeNote": "已并入 sc-spotlight-sweep-moves，新的调用请用 sc-spotlight-sweep-moves（variant: 'hero'）。code.js 保留作兜底，未删除。"
+}

@@ -1,0 +1,44 @@
+{
+  "title": "gradient-transition",
+  "kind": "motion",
+  "tags": [
+    "transition",
+    "低（纯背景运动，为前景内容让路）"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/transition/gradient-transition.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "背景在 linear、radial、conic 三类 CSS 渐变间平滑过渡——角度、色标、中心、半径逐参数插值，段间交叉淡化换类型",
+  "duration": 6.67,
+  "feasibility": "direct",
+  "kindClass": "转场",
+  "category": "transition",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-05T15:39:42.953Z",
+  "generatedBy": "tools/convert.mjs",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-05T15:39:42.953Z",
+  "calibrationNote": "第二批（几何+转场）人工重写为 Canvas2D 纯函数；契约 render(ctx,t,env)，props 均带默认值与边界夹取。",
+  "codeContract": "export function render(ctx, t, env)",
+  "batch": 2,
+  "rewrittenFrom": "rewrite",
+  "rewriteNote": "原卡依赖 CSS blur/mask 合成特性，已用 Canvas2D 手写等价实现（见 code.js 头部改动声明）。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:21.544Z",
+  "render": {
+    "fingerprint": "1793893150662:9633",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

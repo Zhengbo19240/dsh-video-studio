@@ -1,0 +1,20 @@
+{
+  "title": "K 线动画",
+  "kind": "motion",
+  "tags": [
+    "图表",
+    "金融",
+    "数据"
+  ],
+  "source": "vibe-motion/skills · remotion-candlestick（原生移植）",
+  "license": "MIT（上游）",
+  "description": "逐根长出的蜡烛 + 均线。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:11.606Z",
+  "render": {
+    "fingerprint": "1793858058275:1523",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

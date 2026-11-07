@@ -1,0 +1,52 @@
+# 依赖
+node_modules/
+
+# 构建产物
+#   client.js 是 src/client/*.js 的打包结果（npm run build）。
+#   仓库里保留一份已构建的 client.js，clone 后无需构建即可加载插件；
+#   改过客户端源码请重新 build 并一起提交。
+.build/
+dist/
+
+# 运行时 / 生成目录
+reports/
+exports/
+assets/
+.dsh-video/
+__pycache__/
+*.pyc
+
+# 本地工程与测试残留
+.demo-*/
+_tmp-*
+*.bak
+*.bak.*
+
+# 音频二进制：默认不入库（避免误加自己的素材）
+#   例外：packages/sound-library/ 下内置的 CC0 音效要入库，见下面 ! 规则
+*.mp3
+*.wav
+*.ogg
+*.m4a
+*.flac
+*.aac
+*.zip
+!packages/sound-library/**/*.mp3
+!packages/sound-library/**/*.wav
+!packages/sound-library/**/*.ogg
+!packages/sound-library/**/*.m4a
+!packages/sound-library/**/*.flac
+
+# 环境与凭据
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

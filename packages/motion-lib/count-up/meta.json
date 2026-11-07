@@ -1,0 +1,20 @@
+{
+  "title": "数字滚动",
+  "kind": "motion",
+  "tags": [
+    "文字",
+    "数据",
+    "动效"
+  ],
+  "source": "自研实现",
+  "license": "自研实现",
+  "description": "从 0 滚动到目标值的数字，带缓出。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:03.515Z",
+  "render": {
+    "fingerprint": "1793856426171:667",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "title": "bezier-source-converge-merge",
+  "kind": "motion",
+  "tags": [
+    "ui-entrance",
+    "中（长镜慢速推进，靠数据包滑行维持活性；吞并瞬间是唯一小高点）"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/ui-entrance/bezier-source-converge-merge.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "左侧四个来源节点各有一条细贝塞尔曲线连向右侧同一汇聚点，曲线先错峰由左向右 draw-on，节点沿自己的曲线滑向汇聚点并三段式加速缩小到消失，强调色数据包全程沿路径滑行，吞并完成后曲线从左端反向擦除只留品牌标志（demo：白瓷圆片托 video-shotcraft 镜刻标志）",
+  "duration": 5.6,
+  "feasibility": "direct",
+  "kindClass": "几何",
+  "category": "ui-entrance",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-05T15:08:00.471Z",
+  "generatedBy": "tools/convert.mjs",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-05T15:39:42.953Z",
+  "calibrationNote": "第二批（几何+转场）人工重写为 Canvas2D 纯函数；契约 render(ctx,t,env)，props 均带默认值与边界夹取。",
+  "codeContract": "export function render(ctx, t, env)",
+  "batch": 2,
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:14.108Z",
+  "render": {
+    "fingerprint": "1793894206999:13998",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

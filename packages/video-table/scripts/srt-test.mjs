@@ -1,0 +1,11 @@
+import { parseSrt, toSrt, clipsToSrt } from "../src/srt.mjs";
+let pass=0, fail=0;
+const t=(n,f)=>{try{f();pass++;console.log("  ok   "+n)}catch(e){fail++;console.log("  FAIL "+n+" :: "+e.message)}};
+const sample = "1\n00:00:01,000 --> 00:00:03,500\n你好\n\n2\n00:00:04,250 --> 00:00:05,000\n第二句\n世界\n";
+t("解析两条", ()=>{ const r=parseSrt(sample); if(r.length!==2) throw new Error("len="+r.length); if(r[0].start!==1||r[0].end!==3.5) throw new Error(JSON.stringify(r[0])); if(r[1].text!=="第二句\n世界") throw new Error("多行"); });
+t("容忍 BOM 与 CRLF", ()=>{ const r=parseSrt("\uFEFF1\r\n00:00:00,500 --> 00:00:01,500\r\nabc\r\n"); if(r.length!==1||r[0].start!==0.5) throw new Error(JSON.stringify(r)); });
+t("跳过坏块", ()=>{ const r=parseSrt("1\n00:00:05,000 --> 00:00:01,000\n反的\n\n2\n没有时间轴\nxxx"); if(r.length!==0) throw new Error("len="+r.length); });
+t("反向生成再解析一致", ()=>{ const src=[{start:0.2,end:2.4,text:"a"},{start:3,end:4.5,text:"b"}]; const s=toSrt(src); const back=parseSrt(s); if(back.length!==2||Math.abs(back[0].end-2.4)>0.002) throw new Error(JSON.stringify(back)); });
+t("片段转 SRT", ()=>{ const s=clipsToSrt([{type:"text",start:0,duration:2,text:"x"},{type:"media",start:0,duration:1}]); if(!s.includes("00:00:00,000 --> 00:00:02,000")) throw new Error(s); });
+console.log(`\n${pass} passed, ${fail} failed`);
+process.exit(fail?1:0);

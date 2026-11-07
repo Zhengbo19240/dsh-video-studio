@@ -1,0 +1,63 @@
+{
+  "title": "斜切滑移（近似）",
+  "kind": "motion",
+  "kindClass": "几何",
+  "category": "camera",
+  "tags": [
+    "camera",
+    "中高（透视炫技+持续运动，但节奏是匀的）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/camera/steep-tilt-glide.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "固定镜头下页面侧立沿横面方向滑移掠过镜头，滑移带速度重影、文字组件悬空贴落、由暗揭亮。（近似：60° 倾角用横向压缩近似，没有透视收敛）",
+  "duration": 4,
+  "feasibility": "skip",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.490Z",
+  "calibrationMinutes": 0.66,
+  "calibrationNote": "陡角斜切平面滑移，透视压缩",
+  "generatedAt": "2026-11-06T05:37:40.490Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:15.195Z",
+  "render": {
+    "fingerprint": "1793944948999:10719",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "verdict": "approximate",
+  "verdictReason": "60° 强透视只用横向压缩（cos 60° = 0.5）近似，左右等宽、右近左远不成立；真做要逐条带投影，2026-11-06 决定不救，改名并写清差在哪。",
+  "limitations": [
+    "60° 强透视只是横向压缩（cos 60° = 0.5），页面左右两缘等宽——右近左远不成立，正确读法是「被压扁的平面」",
+    "速度重影是同一页偏移重画三份，不是真正的运动模糊",
+    "页面是超宽平面贴图，不会因为贴得更近而在画面上变大",
+    "悬空元素是程序画的标签块，不是真的页面组件树"
+  ],
+  "honestyCheckedAt": "2026-11-06T08:33:31.625Z",
+  "honestyScope": "2026-11-06 诚实性复核（修好/降级/标废三选一）"
+}

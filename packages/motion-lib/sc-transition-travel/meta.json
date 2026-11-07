@@ -1,0 +1,53 @@
+{
+  "title": "旅行转场",
+  "kind": "motion",
+  "kindClass": "转场",
+  "category": "transition",
+  "tags": [
+    "transition",
+    "n/a（技法卡，不占能量位）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/transition/transition-travel.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "穿越式转场——字腔穿越：巨型章节标题的字形就是一扇窗，镜头钻进字形笔画完成换景",
+  "duration": 3,
+  "feasibility": "rewrite",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.492Z",
+  "calibrationMinutes": 0.65,
+  "calibrationNote": "素材向镜头冲来穿过，接下一画面",
+  "generatedAt": "2026-11-06T05:37:40.492Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:21.134Z",
+  "render": {
+    "fingerprint": "1793944948999:11092",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "title": "文字当遮罩",
+  "kind": "motion",
+  "kindClass": "文字",
+  "category": "opening",
+  "tags": [
+    "opening",
+    "中高（漂移段沉稳，接管段一次爆发）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/opening/text-as-mask.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "文字视频遮罩——瓷白舞台上切出超粗大标题字，字内部透出缓慢平移的暗色实时产品面板，结尾吸一口气后字形指数冲入放大溢出、内部画面接管全屏。遮罩走「面板 ∩ 字形」：优先 OffscreenCanvas，其次 DOM canvas；两者都没有时明确降级为「面板 + 字描边」并在画面里标注，不会假装是遮罩。",
+  "duration": 3.4,
+  "feasibility": "rewrite",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "image",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.491Z",
+  "calibrationMinutes": 0.75,
+  "calibrationNote": "素材只在巨型字形内可见",
+  "generatedAt": "2026-11-06T05:37:40.491Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T08:39:32.780Z",
+  "render": {
+    "fingerprint": "1793953739919:16587",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "verdict": "fixed",
+  "verdictReason": "旧实现的文字遮罩每次都是全透明（面板画完后 destination-in 没留下像素），成片里根本没有「字内透出面板」；2026-11-06 重建为每帧遮罩 + alpha 自检，并把遮罩表面从 OffscreenCanvas 扩到 OffscreenCanvas / DOM canvas 两条路。",
+  "limitations": [
+    "遮罩需要离屏表面：Worker 渲染路径有 OffscreenCanvas，主线程导出有 DOM canvas；纯 Node 之类两者都没有的环境会退化成描边示意（画面左下角会写字提醒）",
+    "冲入段是整张遮罩缩放，字形边缘会有重采样发虚，不是矢量放大",
+    "面板内容是程序画的假看板，不是真实产品截图；给 assetId 只替换底层图，不做真实 UI 录屏",
+    "字距依赖 ctx.letterSpacing（Chrome/Edge 有）；老浏览器没有时用默认字距，会比设计稿松一点"
+  ],
+  "honestyCheckedAt": "2026-11-06T08:33:31.625Z",
+  "honestyScope": "2026-11-06 诚实性复核（修好/降级/标废三选一）"
+}

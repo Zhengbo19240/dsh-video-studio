@@ -1,0 +1,20 @@
+{
+  "title": "画中画（媒体）",
+  "kind": "motion",
+  "tags": [
+    "媒体",
+    "画中画",
+    "视频"
+  ],
+  "source": "自研实现",
+  "license": "自研实现",
+  "description": "把 props.assetId 指向的视频缩到右下角，圆角裁切并 0.5 秒淡入；素材缺失时画占位框。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:06.407Z",
+  "render": {
+    "fingerprint": "1793890316068:2978",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

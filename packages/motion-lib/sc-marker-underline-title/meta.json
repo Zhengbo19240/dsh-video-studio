@@ -1,0 +1,53 @@
+{
+  "title": "马克笔下划线",
+  "kind": "motion",
+  "kindClass": "文字",
+  "category": "typography",
+  "tags": [
+    "typography",
+    "低（一笔点睛，不抢标题的戏）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/typography/marker-underline-title.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "大标题落定后，关键词下方马克笔下划线从左到右快速描画——变宽笔形、毛糙边缘、微上斜跟随斜体字势，贴着字底",
+  "duration": 3.2,
+  "feasibility": "rewrite",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.483Z",
+  "calibrationMinutes": 0.62,
+  "calibrationNote": "马克笔笔画揭示，素材藏在笔迹里",
+  "generatedAt": "2026-11-06T05:37:40.483Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:06.636Z",
+  "render": {
+    "fingerprint": "1793944948999:10383",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

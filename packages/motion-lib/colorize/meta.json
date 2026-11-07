@@ -1,0 +1,20 @@
+{
+  "title": "黑白上色揭示",
+  "kind": "motion",
+  "tags": [
+    "上色",
+    "转场",
+    "调色"
+  ],
+  "source": "vibe-motion/skills · colorize（原生移植）",
+  "license": "MIT（上游）",
+  "description": "左半黑白、右半彩色，竖直分界线从左扫到右。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:03.522Z",
+  "render": {
+    "fingerprint": "1793858058275:951",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

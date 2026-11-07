@@ -1,0 +1,53 @@
+{
+  "title": "发牌飞入",
+  "kind": "motion",
+  "kindClass": "几何",
+  "category": "ui-entrance",
+  "tags": [
+    "ui-entrance",
+    "高（节奏爬升段主力，不放开场第一镜）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/ui-entrance/deck-deal-flyin.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "暗色石墨桌面上的实体牌堆特写环绕开局，灯从牌堆亮到旁边的页面板，一摞卡像发牌一样硬加速甩进网格，相机追着发牌升起后仰、落在整块满板的跑道式俯瞰上定格",
+  "duration": 5,
+  "feasibility": "skip",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "image",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.475Z",
+  "calibrationMinutes": 0.92,
+  "calibrationNote": "26 张牌的节拍硬加速 + 单卡 z 弧顶；素材只贴首张真卡",
+  "generatedAt": "2026-11-06T05:37:40.475Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:06:58.764Z",
+  "render": {
+    "fingerprint": "1793944948999:15435",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

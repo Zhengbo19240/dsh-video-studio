@@ -1,0 +1,45 @@
+{
+  "title": "fui-hud-moves",
+  "kind": "motion",
+  "tags": [
+    "effects",
+    "中高（咬合帧是打击点）"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/effects/fui-hud-moves.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "FUI/HUD 准星咬合——reticle-lock-on 四个 L 形角标组成的取景框从画外飞入、超调回弹后咬合锁定目标",
+  "duration": 3,
+  "feasibility": "direct",
+  "kindClass": "几何",
+  "category": "effects",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-05T15:08:00.453Z",
+  "generatedBy": "tools/convert.mjs",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-05T15:39:42.953Z",
+  "calibrationNote": "第二批（几何+转场）人工重写为 Canvas2D 纯函数；契约 render(ctx,t,env)，props 均带默认值与边界夹取。",
+  "codeContract": "export function render(ctx, t, env)",
+  "batch": 2,
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:19.187Z",
+  "render": {
+    "fingerprint": "1793893974643:8378",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "verdict": "merged-into",
+  "mergedInto": "sc-scan-bracket-sweep",
+  "mergeNote": "已并入 sc-scan-bracket-sweep，新的调用请用 sc-scan-bracket-sweep（mode: 'lock'）。code.js 保留作兜底，未删除。"
+}

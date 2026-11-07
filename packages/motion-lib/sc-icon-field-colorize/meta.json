@@ -1,0 +1,62 @@
+{
+  "title": "图标场着色",
+  "kind": "motion",
+  "kindClass": "文字",
+  "category": "opening",
+  "tags": [
+    "opening",
+    "中（浮现是铺垫，翻色瞬间是唯一爆点）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/opening/icon-field-colorize.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "灰阶小图标点阵错峰浮现铺满全屏，停一拍后多道品牌色横带波纹极快向下扫翻全场——「功能全景先摆满，品牌一瞬间点亮」的开场/收束卡。键帽字形是 14 种 × 4 种修饰（56 组合），按行列错位 + 噪声分配，不再每 8 个循环一次。",
+  "duration": 4.2,
+  "feasibility": "rewrite",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.479Z",
+  "calibrationMinutes": 0.92,
+  "calibrationNote": "去色网格 + 由中心扩散的着色波",
+  "generatedAt": "2026-11-06T05:37:40.479Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T08:39:31.120Z",
+  "render": {
+    "fingerprint": "1793954149390:19463",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "verdict": "fixed",
+  "verdictReason": "旧版 170 个键帽只有 8 种字形、按索引取模，数到第八个就能看出循环；2026-11-06 扩到 14 种字形 × 4 种修饰，并按行列错位 + 噪声分配。",
+  "limitations": [
+    "170 个键帽是 14 种字形 + 4 种修饰的组合，不是 170 个真不同的图标；凑近数仍能找到重复",
+    "键帽里是几何图形，不是真实产品图标集",
+    "中央 3×2 的素材格需要 assetId；没给时是虚线占位格"
+  ],
+  "honestyCheckedAt": "2026-11-06T08:33:31.625Z",
+  "honestyScope": "2026-11-06 诚实性复核（修好/降级/标废三选一）"
+}

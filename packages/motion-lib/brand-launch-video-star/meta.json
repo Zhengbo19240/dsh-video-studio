@@ -1,0 +1,20 @@
+{
+  "title": "品牌发布片",
+  "kind": "motion",
+  "tags": [
+    "品牌",
+    "标题",
+    "发布"
+  ],
+  "source": "vibe-motion/skills · brand-launch-video-star（原生移植）",
+  "license": "MIT（上游）",
+  "description": "标题逐字上浮 + 色块擦除 + 副标题淡入。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:01.083Z",
+  "render": {
+    "fingerprint": "1793858110066:1502",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

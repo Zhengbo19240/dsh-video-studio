@@ -1,0 +1,46 @@
+{
+  "title": "rhythm-interrupt-moves",
+  "kind": "motion",
+  "tags": [
+    "rhythm",
+    "A 中"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/rhythm/rhythm-interrupt-moves.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "打断节奏——jump-cut-punch-in 三级跳切推近：同构图三次无补间硬跳放大，逐级逼近目标",
+  "duration": 4.5,
+  "feasibility": "direct",
+  "kindClass": "几何",
+  "category": "rhythm",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-05T15:08:00.463Z",
+  "generatedBy": "tools/convert.mjs",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-05T15:39:42.953Z",
+  "calibrationNote": "第二批（几何+转场）人工重写为 Canvas2D 纯函数；契约 render(ctx,t,env)，props 均带默认值与边界夹取。",
+  "codeContract": "export function render(ctx, t, env)",
+  "batch": 2,
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:24.394Z",
+  "render": {
+    "fingerprint": "1793892880959:7066",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "verdict": "merged-into",
+  "mergedInto": "sc-beat-cut-moves",
+  "mergedAt": "2026-11-06",
+  "mergeNote": "已并入 sc-beat-cut-moves，新的调用请用 sc-beat-cut-moves（subject: 'figure'）。code.js 保留作兜底，未删除。"
+}

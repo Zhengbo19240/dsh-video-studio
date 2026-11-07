@@ -1,0 +1,20 @@
+{
+  "title": "程序鱼",
+  "kind": "motion",
+  "tags": [
+    "生物",
+    "水",
+    "程序化"
+  ],
+  "source": "vibe-motion/skills · procedural-fish-render（原生移植）",
+  "license": "MIT（上游）",
+  "description": "三角函数驱动的鱼群游动。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:09.155Z",
+  "render": {
+    "fingerprint": "1793858110066:1275",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

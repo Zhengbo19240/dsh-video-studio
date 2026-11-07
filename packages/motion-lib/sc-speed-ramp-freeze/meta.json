@@ -1,0 +1,53 @@
+{
+  "title": "变速冻结",
+  "kind": "motion",
+  "kindClass": "几何",
+  "category": "rhythm",
+  "tags": [
+    "rhythm",
+    "中高（速度反差本身即energy beat）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/rhythm/speed-ramp-freeze.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "帧号非线性 remap 的节奏手法——定格标注（流动→定格圈注→解冻）",
+  "duration": 4,
+  "feasibility": "rewrite",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "image",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.488Z",
+  "calibrationMinutes": 0.87,
+  "calibrationNote": "拖影渐收 → 冻结帧 + 时间码",
+  "generatedAt": "2026-11-06T05:37:40.488Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:12.491Z",
+  "render": {
+    "fingerprint": "1793944948999:14683",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

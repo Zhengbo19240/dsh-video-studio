@@ -1,0 +1,42 @@
+{
+  "title": "segmented-thumb-hero",
+  "kind": "motion",
+  "tags": [
+    "interaction",
+    "中（微交互特写，精致不轰）"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/interaction/segmented-thumb-hero.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "分段控件 thumb 位移当主角特写——超大胶囊 segmented control 弹簧浮入，描边箭头光标画外滑入按下，白 thumb 8f ease-out 滑到另一段，到位瞬间新图标 spring 弹出、旧图标收起",
+  "duration": 3.5,
+  "feasibility": "direct",
+  "kindClass": "几何",
+  "category": "interaction",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-05T15:08:00.457Z",
+  "generatedBy": "tools/convert.mjs",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-05T15:39:42.953Z",
+  "calibrationNote": "第二批（几何+转场）人工重写为 Canvas2D 纯函数；契约 render(ctx,t,env)，props 均带默认值与边界夹取。",
+  "codeContract": "export function render(ctx, t, env)",
+  "batch": 2,
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:29.606Z",
+  "render": {
+    "fingerprint": "1793894243578:10452",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

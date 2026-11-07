@@ -1,0 +1,56 @@
+{
+  "title": "scan-bracket-sweep",
+  "kind": "motion",
+  "tags": [
+    "effects",
+    "中低（机械、克制，节奏全在往复扫掠的呼吸上）"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/effects/scan-bracket-sweep.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "文档弹到中央，四角落下 L 形取景括号，一条扫描光带拖着渐变尾迹在文档上往复扫 5 趟——文档全程静止，只有光在读它",
+  "duration": 5,
+  "feasibility": "direct",
+  "kindClass": "几何",
+  "category": "effects",
+  "autoConverted": false,
+  "needsReview": false,
+  "generatedAt": "2026-11-05T15:08:00.455Z",
+  "generatedBy": "tools/convert.mjs",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "mode": {
+        "type": "string",
+        "enum": [
+          "sweep",
+          "lock"
+        ],
+        "default": "sweep",
+        "description": "合并形态（第二轮）：sweep=四角取景框 + 扫描光带往复（默认）；lock=四角从画外扑入 + 超调咬合 + 锁定白闪（原 sc-fui-hud-moves）。"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [],
+  "humanCalibrated": true,
+  "reviewedAt": "2026-11-05T15:39:42.953Z",
+  "calibrationNote": "第二批（几何+转场）人工重写为 Canvas2D 纯函数；契约 render(ctx,t,env)，props 均带默认值与边界夹取。",
+  "codeContract": "export function render(ctx, t, env)",
+  "batch": 2,
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:26.921Z",
+  "render": {
+    "fingerprint": "1793894097399:9574",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "mergedVariants": [
+    "sc-fui-hud-moves"
+  ],
+  "mergedRound": 2
+}

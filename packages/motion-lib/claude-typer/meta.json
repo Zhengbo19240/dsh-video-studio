@@ -1,0 +1,20 @@
+{
+  "title": "提示词打字机",
+  "kind": "motion",
+  "tags": [
+    "文字",
+    "UI",
+    "打字"
+  ],
+  "source": "vibe-motion/skills · claude-typer（原生移植）",
+  "license": "MIT（上游）",
+  "description": "终端风格逐字打出提示词，带光标闪烁。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:01.074Z",
+  "render": {
+    "fingerprint": "1793857225049:1352",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

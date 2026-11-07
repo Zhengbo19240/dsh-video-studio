@@ -1,0 +1,20 @@
+{
+  "title": "地球航线",
+  "kind": "motion",
+  "tags": [
+    "3D",
+    "地球",
+    "航线"
+  ],
+  "source": "vibe-motion/skills · threejs-earth-render（原生移植）",
+  "license": "MIT（上游）",
+  "description": "径向渐变球体 + 经纬弧 + 一条飞线。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:30:14.537Z",
+  "render": {
+    "fingerprint": "1793858110075:1526",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

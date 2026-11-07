@@ -1,0 +1,53 @@
+{
+  "title": "终端 3D",
+  "kind": "motion",
+  "kindClass": "几何",
+  "category": "camera",
+  "tags": [
+    "camera",
+    "中（飞行给动感、打字给节奏，整体是沉稳的技术叙事；收在 ● READY 一记亮点）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/camera/terminal-3d.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "三个终端窗散布 3D 空间，相机窗间飞行、途中正弦拉远，每到一窗打字机敲命令、结果逐行滑出——命令执行的空间叙事流",
+  "duration": 4.4,
+  "feasibility": "skip",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.490Z",
+  "calibrationMinutes": 0.79,
+  "calibrationNote": "素材按透视贴进终端窗口的四点四边形",
+  "generatedAt": "2026-11-06T05:37:40.490Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:18.118Z",
+  "render": {
+    "fingerprint": "1793945125003:13150",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

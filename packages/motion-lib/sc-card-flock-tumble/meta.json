@@ -1,0 +1,53 @@
+{
+  "title": "卡片群翻飞转场",
+  "kind": "motion",
+  "kindClass": "转场",
+  "category": "transition",
+  "tags": [
+    "transition",
+    "极高（全片能量顶点用）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/transition/card-flock-tumble.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "三张 UI 页卡从侧棱薄边 3D 翻飞成阶梯站定（全程清晰、样条连续丝滑），站定后保持慢转不停，快速收束吸入中心，炸出单个湍流烟雾环扩散，巨字横贯收场",
+  "duration": 4.5,
+  "feasibility": "skip",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.472Z",
+  "calibrationMinutes": 1.01,
+  "calibrationNote": "三卡共用一条素材；Catmull-Rom 分段导数连续，收束后仍慢转不停",
+  "generatedAt": "2026-11-06T05:37:40.473Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:06:55.925Z",
+  "render": {
+    "fingerprint": "1793944948999:17863",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

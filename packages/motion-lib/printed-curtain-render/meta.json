@@ -1,0 +1,20 @@
+{
+  "title": "印花幕布",
+  "kind": "motion",
+  "tags": [
+    "布料",
+    "揭开",
+    "质感"
+  ],
+  "source": "vibe-motion/skills · printed-curtain-render（原生移植）",
+  "license": "MIT（上游）",
+  "description": "竖直布条按正弦相位摆动 + 条纹纹理。",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T05:29:09.139Z",
+  "render": {
+    "fingerprint": "1793858110066:972",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  }
+}

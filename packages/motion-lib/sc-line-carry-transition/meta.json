@@ -1,0 +1,56 @@
+{
+  "title": "线条带走",
+  "kind": "motion",
+  "kindClass": "转场",
+  "category": "transition",
+  "tags": [
+    "transition",
+    "中",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/transition/line-carry-transition.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "线条接力横移转场——场景 A 的进度条延伸出画，镜头跟线横移，线在移动中拐角围出场景 B 的卡框，全程无剪切",
+  "duration": 3,
+  "feasibility": "rewrite",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.482Z",
+  "calibrationMinutes": 0.9,
+  "calibrationNote": "单线扫过带走旧画面、带回新画面",
+  "generatedAt": "2026-11-06T05:37:40.482Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:03.968Z",
+  "render": {
+    "fingerprint": "1793944948999:14229",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "verdict": "merged-into",
+  "mergedInto": "tc-line-carry-transition",
+  "mergeNote": "已并入 tc-line-carry-transition，新的调用请用 tc-line-carry-transition（span: 'wide'）。code.js 保留作兜底，未删除。"
+}

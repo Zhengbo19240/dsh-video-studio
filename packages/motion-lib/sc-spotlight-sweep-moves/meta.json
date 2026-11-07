@@ -1,0 +1,66 @@
+{
+  "title": "扫光",
+  "kind": "motion",
+  "kindClass": "几何",
+  "category": "effects",
+  "tags": [
+    "effects",
+    "中低（克制、神秘感，爆点在\"亮起\"瞬间）",
+    "媒体",
+    "batch-media-1"
+  ],
+  "source": "shotcraft",
+  "sourcePath": "references/shots/effects/spotlight-sweep-moves.md",
+  "sourceRepo": "https://github.com/Vincentwei1021/video-shotcraft",
+  "license": "Apache-2.0",
+  "licenseNote": "可改可商用；须保留版权与归属声明、随副本带 LICENSE、标注改动过的文件。",
+  "author": "Vincentwei1021",
+  "description": "暗场聚光显影三式——A 醒睡扫过（光到即亮光走即暗）、B 贴边泛光横摇（紫光贴 UI 边缘渗入+聚光匀速右移）、C 角落匀速显影（径向聚光从角落匀速扩张点亮全屏）；黑场里\"光即叙事\"的 UI 展示",
+  "duration": 3.2,
+  "feasibility": "rewrite",
+  "humanCalibrated": true,
+  "mediaNeeded": true,
+  "mediaKind": "video",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "default": "",
+        "description": "素材 id（env.media 里查）；缺省时画带信息量的占位"
+      },
+      "variant": {
+        "type": "string",
+        "enum": [
+          "sweep",
+          "hero"
+        ],
+        "default": "sweep",
+        "description": "合并形态（第二轮）：sweep=暗场聚光显影 A/B/C 三式（默认，mode 参数照旧）；hero=光池游走锁定一张卡 + 相机推进 + 卡片弹起 + 轮廓光束（原 sc-spotlight-hero-card）。"
+      }
+    },
+    "required": []
+  },
+  "propsInputs": [
+    "assetId"
+  ],
+  "autoConverted": false,
+  "needsReview": false,
+  "reviewedAt": "2026-11-06T05:37:40.489Z",
+  "calibrationMinutes": 0.7,
+  "calibrationNote": "镜面高光斜扫素材，两次错峰",
+  "generatedAt": "2026-11-06T05:37:40.489Z",
+  "generatedBy": "tools/render-card-preview.mjs + .build/media-previews-1/_gen-meta.mjs",
+  "thumb": "thumb.png",
+  "thumbAt": "2026-11-06T06:07:15.188Z",
+  "render": {
+    "fingerprint": "1793944948999:12121",
+    "width": 480,
+    "height": 270,
+    "frames": 3
+  },
+  "mergedVariants": [
+    "sc-spotlight-hero-card"
+  ],
+  "mergedRound": 2
+}
