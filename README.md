@@ -164,15 +164,23 @@ node packages/video-table/scripts/undo-stack-test.mjs
 
 ---
 
-## 截图
+## 演示
 
-> 占位：正式发布前请补三张图，放在 `docs/images/`，并把下面三行换成实际图片。
->
-> - `docs/images/workbench.png` —— 工作台面板：时间线 + 预览 + 检查器
-> - `docs/images/agent-edit.png` —— 对话里让 agent 改一个片段，面板同步变化
-> - `docs/images/motion-lib.png` —— 动效库列表与一张卡的预览
+这个系统的核心体验在**动态**里：一句话改完，时间线当场变。静态截图说明不了多少，所以不放图。
+装上之后自己开一个工程，两分钟能看出它和「生成一段 MP4」的工具差在哪。
 
-（不拿截图凑数：这三张图应该由发布者亲自截，读者一眼能看出真伪。）
+<!--
+发布者备忘（GitHub 不渲染这一段）：
+
+想补图时，用 `显示工作台的技术文件夹/capture-ui.mjs` 截真实界面，
+放到 docs/images/ ，把下面三行换成实际图片引用：
+
+  ![工作台](docs/images/workbench.png)      工作台面板：时间线 + 预览 + 检查器
+  ![agent 改片](docs/images/agent-edit.png)  对话里让 agent 改一个片段，面板同步变化
+  ![动效库](docs/images/motion-lib.png)      动效库列表与一张卡的预览
+
+原则：由发布者本人截真机界面，不用示意图、不用生成图凑数——读者一眼能看出真伪。
+-->
 
 ---
 
