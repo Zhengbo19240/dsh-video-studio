@@ -10,6 +10,7 @@
 |---|---|---|
 | `packages/video-table` | 视频工作台本体：时间线、预览、导出、音效、语音转字幕、配音，以及给 agent 的原生工具 | 0.2.0 |
 | `packages/video-brief` | 开工前的阶段机与门禁：10 槽位简报 → 分镜脚本确认 → 风格锁定 → 才允许改时间线 / 导出 | 0.3.0 |
+| `packages/video-preset` | 「视频剪辑」agent 预设：人格 + 工具集 + 剪辑纪律（工作流、动画原则、音效规则）。**开新会话时可选** | 0.1.0 |
 | `packages/motion-lib` | 66 张代码动效卡（`code.js` 纯函数 + `meta.json`），工作台原生加载 | — |
 | `packages/sound-library` | 音效的**声学索引**与下载脚本；不含音频二进制 | — |
 
@@ -61,23 +62,34 @@ npm install
 
 工作台依赖 `mp4-muxer` / `webm-muxer`，不装 `npm install` 会在导出时报缺模块。
 
-### 2. 装两个插件
+### 2. 装三个插件
 
-两个都要装，路径用**绝对路径**：
+三个都装，路径用**绝对路径**：
 
 ```
 plugin_manager install_bundle target="link:<克隆目录>/packages/video-table"
 plugin_manager install_bundle target="link:<克隆目录>/packages/video-brief"
+plugin_manager install_bundle target="link:<克隆目录>/packages/video-preset"
 ```
 
-- `video-table` → 工作台面板 + 全部视频工具
-- `video-brief` → 阶段机（问询 / 脚本 / 风格 / 门禁）
+| 插件 | 给什么 | 不装的后果 |
+|---|---|---|
+| `video-table` | 工作台面板 + 全部 `video_*` 工具 | 没有面板，什么都做不了 |
+| `video-brief` | 阶段机：问询 → 脚本 → 风格 → 门禁 | 脚本没确认也会开工，风格没定也会改时间线 |
+| `video-preset` | 开新会话时多一个「视频剪辑」模式 | 没有完整人格与剪辑纪律，只有一个通用 agent |
 
-只装 `video-table` 也能剪，但没有门禁：脚本没确认也会开工，风格没定也会改时间线。
-建议两个一起装。
+**三者不是一回事：**
 
-> 也可以手动改 profile：`dependencies` 里加 `"dsh-video-workbench": "link:<路径>"` 与
-> `"dsh-video-brief": "link:<路径>"`，`dsh.profile.bundles` 里加 `dsh-video-workbench`、`dsh-video-brief`。
+```
+video-table   是「手」—— 能改时间线、能导出
+video-brief   是「流程」—— 什么时候允许改
+video-preset  是「这个人」—— 选了它，agent 才带着剪辑的判断力与纪律
+```
+
+`video-brief` 的提示段是**宿主级**的，装上就对每个会话生效；`video-preset` 的提示是**模式级**的，只有你开新会话并选中「视频剪辑」时才注入。
+
+> 也可以手动改 profile：`dependencies` 里加三个 `link:<路径>`，`dsh.profile.bundles` 里加
+> `dsh-video-workbench`、`dsh-video-brief`、`dsh-video-preset`。
 
 ### 3. 放数据（不做这步，插件能用但库是空的）
 

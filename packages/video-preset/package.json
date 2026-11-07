@@ -1,0 +1,13 @@
+{
+  "name": "dsh-video-preset",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "「视频剪辑」agent 预设：人格 + 工具集 + 剪辑纪律（工作流、动画原则、音效规则）",
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
