@@ -47,7 +47,85 @@
 
 ## 快速开始
 
-要求Deepseek版本大于0.2.1-rc5，添加插件：https://github.com/Zhengbo19240/dsh-video-studio
+要求 DeepSeek 版本 > `0.2.1-rc5`。插件来源：<https://github.com/Zhengbo19240/dsh-video-studio>
+
+这个仓库是 monorepo：**两个插件 + 两份数据**。一次装不全，按下面四步走。
+
+### 1. 取仓库、装依赖
+
+```bash
+git clone https://github.com/Zhengbo19240/dsh-video-studio
+cd dsh-video-studio
+npm install
+```
+
+工作台依赖 `mp4-muxer` / `webm-muxer`，不装 `npm install` 会在导出时报缺模块。
+
+### 2. 装两个插件
+
+两个都要装，路径用**绝对路径**：
+
+```
+plugin_manager install_bundle target="link:<克隆目录>/packages/video-table"
+plugin_manager install_bundle target="link:<克隆目录>/packages/video-brief"
+```
+
+- `video-table` → 工作台面板 + 全部视频工具
+- `video-brief` → 阶段机（问询 / 脚本 / 风格 / 门禁）
+
+只装 `video-table` 也能剪，但没有门禁：脚本没确认也会开工，风格没定也会改时间线。
+建议两个一起装。
+
+> 也可以手动改 profile：`dependencies` 里加 `"dsh-video-workbench": "link:<路径>"` 与
+> `"dsh-video-brief": "link:<路径>"`，`dsh.profile.bundles` 里加 `dsh-video-workbench`、`dsh-video-brief`。
+
+### 3. 放数据（不做这步，插件能用但库是空的）
+
+**动效库**（66 张卡）：
+
+```bash
+# 把仓库里的 packages/motion-lib 复制到 DSH 的数据目录
+# Windows: %USERPROFILE%\.dsh\motion-lib
+# macOS / Linux: ~/.dsh/motion-lib
+# 或者用环境变量指过去，不必复制：
+DSH_MOTION_LIB=<克隆目录>/packages/motion-lib
+```
+
+**音效库**（753 条索引 + 可选音频）：
+
+```bash
+npm run sounds:download     # 下载 Kenney 的 CC0 音效包到 ~/.dsh/sound-library
+# 或指定位置：DSH_SOUND_LIB=<任意目录>
+```
+
+索引里是相对路径，音频放对位置就直接命中，**不需要重新分析**。
+
+### 4. 重启 DSH
+
+宿主在启动时加载工具表与 RPC，装完必须重启。重启后在对话里说「打开视频工作台」，
+或直接让它 `video_setup`（传一个工程目录）。
+
+### 装好没有：四条验证
+
+```
+[ ] 面板能打开，顶栏有工程名 / 时长 / fps / 比例
+[ ] 动效库列表不是空的（应该是 66 条）
+[ ] 音效库能搜到东西（753 条里随便搜个 click）
+[ ] video_stage_get 能返回 stage（装了两个插件时不是 undefined）
+```
+
+任何一条不过，看下面的排错。
+
+### 排错
+
+| 现象 | 原因 | 处理 |
+|---|---|---|
+| 面板打不开 / 没这个按钮 | 版本低于 0.2.1-rc5，或没重启 | 升级 DSH；重启 |
+| 动效库空的 | 没放 `~/.dsh/motion-lib` | 复制过去，或设 `DSH_MOTION_LIB` 后重启 |
+| 音效搜不到 | 没跑 `sounds:download`，或路径不一致 | 跑下载；确认 `~/.dsh/sound-library/kenney/` 存在 |
+| 无头渲帧出黑图 | 找不到浏览器 | 设 `DSH_VIDEO_HEADLESS_BROWSER` 指向 chrome/msedge |
+| 导出报缺模块 | 没跑 `npm install` | 在仓库根目录装依赖后重启 |
+| 导出很慢 | 逐帧渲染，正常 | 1080p 约每帧 20–80ms，取决于图层数 |
 
 ### 可选：浏览器路径
 
