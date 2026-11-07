@@ -17,6 +17,20 @@ import * as player from './player.js';
 export const SAMPLE_WIDTH = 960;
 export const SAMPLE_HEIGHT = 540;
 
+/**
+ * 字体就绪闸门（面板、无头采样、导出共用）。
+ *
+ * 它是 player.ensureFontsReady 的薄封装：把「这一帧会用到的字体」从图层里算出来，
+ * 再去等它们。采样/导出走这里，预览也在 main.js 里调同一个函数 —— 只有一份规则。
+ */
+export async function prepareFonts(input = {}) {
+  const layers = Array.isArray(input.layers) ? input.layers : null;
+  const height = Number(input.height) > 0 ? Number(input.height) : SAMPLE_HEIGHT;
+  let specs = Array.isArray(input.specs) ? input.specs : [];
+  if (!specs.length && layers) specs = player.textFontSpecs(layers, height);
+  return player.ensureFontsReady({ specs, timeoutMs: input.timeoutMs });
+}
+
 /** maxDim → 画布尺寸。规则与旧实现一致：只缩不放，最小 2px。 */
 export function sampleSize(maxDim) {
   const dim = Number(maxDim) > 0 ? Number(maxDim) : 640;
@@ -105,6 +119,9 @@ export async function renderTimelineFrame(input) {
   }
 
   const mediaWarnings = [];
+  // 采样与导出走同一道字体闸门：先等这一帧真正用到的字体，再画。
+  // 超时不算失败，只把结论带回去（调用方/agent 能看到「这次是降级画的」）。
+  const fonts = await prepareFonts({ layers, height, timeoutMs: input.fontTimeoutMs });
   player.drawFrame(ctx, {
     clips,
     assets,
@@ -118,7 +135,7 @@ export async function renderTimelineFrame(input) {
     },
   });
 
-  return { canvas, ctx, width, height, layers, mediaWarnings };
+  return { canvas, ctx, width, height, layers, mediaWarnings, fonts };
 }
 
 /** 渲染一帧并编码成 dataURL。面板用 JPEG（历史行为），无头用 PNG。 */

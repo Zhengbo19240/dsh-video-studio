@@ -41,6 +41,7 @@ import {
   mergeSessionProjects,
 } from './panels.js';
 import * as player from './player.js';
+import { prepareFonts } from './frame-render.js';
 import { createSampler } from './sampler.js';
 import { createAudioEngine } from './audio.js';
 import { probe } from './probe.js';
@@ -62,6 +63,13 @@ import { insertPolicy, isAudioAsset, isVideoAsset, resolveInsertTrack } from '..
 
 // 见 panels.js 同名注释：原生下拉在浅色系统主题下会把 option 画成白底。
 const OPTION_STYLE = { background: T.bg, color: T.text };
+
+/**
+ * 编码探测的等待上限（毫秒）。
+ * 打开表单要快：正常机器上 isConfigSupported × 6 是几十毫秒；超过这个数说明
+ * 驱动/GPU 卡住了，再等下去只是让表单转圈。超时后如实告诉用户「导出时再定」。
+ */
+const CAPS_TIMEOUT_MS = 1200;
 
 function h(type, props, ...children) {
   if (type !== 'select') return React.createElement(type, props, ...children);
@@ -295,6 +303,20 @@ function PlayerCanvas({ clips, assets, playing, playhead, code, engineRef, onTim
     if (state.playing) engine.play(state.playhead);
     else engine.refresh();
 
+    // 字体闸门：预览不阻塞首帧（黑屏比 fallback 更糟），但字体就绪后立刻重画一帧，
+    // 让用户看到的就是导出会得到的度量。导出侧在第 1 帧前 await 同一个函数。
+    let dead = false;
+    const previewTextLayers = () =>
+      (viewRef.current.clips || [])
+        .filter((c) => c && c.type === 'text')
+        .map((c) => ({ kind: 'text', clip: c }));
+    prepareFonts({ height: H, layers: previewTextLayers(), timeoutMs: 1200 })
+      .catch(() => null)
+      .then(() => {
+        const e = engineRef && engineRef.current;
+        if (!dead && e) e.refresh();
+      });
+
     // 媒体就绪状态变了（loadeddata / canplay / 重新加载）→ 暂停时重新定格一帧。
     // 旧代码靠 mediaGeneration 进 key 触发重绘，但那只在循环还在跑时有效。
     const off = player.onMediaReady(() => {
@@ -303,6 +325,7 @@ function PlayerCanvas({ clips, assets, playing, playhead, code, engineRef, onTim
     });
 
     return () => {
+      dead = true;
       off();
       engine.dispose();
       if (engineRef) engineRef.current = null;
@@ -353,6 +376,8 @@ function Workbench(props) {
   const [caps, setCaps] = React.useState(null);
   const [capsBusy, setCapsBusy] = React.useState(false);
   const [capsError, setCapsError] = React.useState(null);
+  // 探测超时 ≠ 探测失败：导出仍然可以走运行时协商，只是表单不再假装知道格式。
+  const [capsTimedOut, setCapsTimedOut] = React.useState(false);
   const [diag, setDiag] = React.useState(null);
   // 面板内输入：webview 禁用了 window.prompt / alert / confirm，所以这三个动作
   // 全部改成「在面板里展开一行」。没有一个 window.* 对话框会再出现在这三处。
@@ -1371,18 +1396,63 @@ function Workbench(props) {
     return { width: size.width, height: size.height, fps, projectFps, bitrateKbps, range, total };
   }
 
-  /** 探测编码能力（异步、不阻塞表单）。失败不抛给用户，只记下来等导出时说明。 */
+  /**
+   * 探测编码能力（异步、不阻塞表单）。失败不抛给用户，只记下来等导出时说明。
+   *
+   * 每次打开表单都重新探，但**必须有上限**：驱动/GPU 在忙的时候
+   * isConfigSupported 可能挂很久，那会把「打开表单」变成「卡住」。
+   * 超时就如实说「探测超时，导出时再定」，而不是让表单转圈。
+   */
   async function loadCaps() {
     setCapsBusy(true);
     setCapsError(null);
+    setCapsTimedOut(false);
+    let timer = null;
     try {
-      setCaps(await probeEncoders());
+      const capsOrTimeout = await Promise.race([
+        probeEncoders().then((value) => ({ value })),
+        new Promise((resolve) => {
+          timer = setTimeout(() => resolve({ timeout: true }), CAPS_TIMEOUT_MS);
+        }),
+      ]);
+      if (capsOrTimeout.timeout) {
+        setCaps(null);
+        setCapsTimedOut(true);
+      } else {
+        setCaps(capsOrTimeout.value);
+      }
     } catch (e) {
       setCaps(null);
       setCapsError((e && e.message) || '编码能力检测失败');
     } finally {
+      if (timer) clearTimeout(timer);
       setCapsBusy(false);
     }
+  }
+
+  /** 表单当前选的分辨率 / 帧率（不抛错，只用于「将导出」那一行的参数显示）。 */
+  function formPixels() {
+    if (exportForm.resolution === '1080') return { width: 1920, height: 1080 };
+    if (exportForm.resolution === '720') return { width: 1280, height: 720 };
+    return projectPixels();
+  }
+
+  function formFps() {
+    const projectFps = (doc && doc.fps) || 30;
+    const fps = exportForm.fps === 'project' ? projectFps : Number(exportForm.fps);
+    return Number.isFinite(fps) && fps > 0 ? fps : projectFps;
+  }
+
+  /**
+   * 「将导出：1920×1080 · 30fps · MP4 / HEVC / AAC（本机不支持 H.264，已自动改用 HEVC）」
+   *
+   * 参数与编码器写在同一行，用户一眼能确认「我要的」和「本机真会用的」是不是一回事。
+   * 编码器/容器/音频三样都来自 probeEncoders 的实测结论，绝不写死。
+   */
+  function formatPlanLine(plan) {
+    const size = formPixels();
+    const detail = describePlan(plan).replace(/^将导出：\s*/, '');
+    return `将导出：${size.width}×${size.height} · ${formFps()}fps · ${detail}`;
   }
 
   /**
@@ -1390,22 +1460,34 @@ function Workbench(props) {
    * blocked=true 时（NO_ENCODER）导出按钮必须禁用 —— 不要让用户等到 90% 才看见失败。
    */
   function exportPreview() {
-    if (capsBusy) return { text: '正在检测编码能力…', tone: 'muted', plan: null, blocked: false };
-    if (capsError) {
+    const size = formPixels();
+    const params = `${size.width}×${size.height} · ${formFps()}fps`;
+    if (capsBusy) return { text: `正在检测编码能力…（${params}）`, tone: 'muted', plan: null, blocked: false };
+    if (capsTimedOut) {
       return {
-        text: '编码能力检测失败：' + capsError + '；导出时会按运行时探测结果选格式',
+        text: `将导出：${params} · 格式待定（探测超时，导出时再定）`,
         tone: 'warn',
         plan: null,
         blocked: false,
       };
     }
-    if (!caps) return { text: '正在检测编码能力…', tone: 'muted', plan: null, blocked: false };
+    if (capsError) {
+      return {
+        text: `编码能力检测失败：${capsError}；将导出 ${params}，格式在导出时再定`,
+        tone: 'warn',
+        plan: null,
+        blocked: false,
+      };
+    }
+    if (!caps) return { text: `正在检测编码能力…（${params}）`, tone: 'muted', plan: null, blocked: false };
     try {
       const plan = chooseExportPlan(caps);
-      return { text: describePlan(plan), tone: plan.audioCodec ? 'info' : 'warn', plan, blocked: false };
+      return { text: formatPlanLine(plan), tone: plan.audioCodec ? 'info' : 'warn', plan, blocked: false };
     } catch (e) {
       return {
-        text: (e && e.message) || '当前环境没有可用的视频编码器',
+        text:
+          '这台机器没有可用编码器：H.264 / HEVC / VP9 / AV1 实测都不可用，导出会被拒绝。' +
+          (e && e.message ? '（' + e.message + '）' : ''),
         tone: 'error',
         plan: null,
         blocked: true,
@@ -1478,6 +1560,19 @@ function Workbench(props) {
       }
     }
     setState({ busy: { label: '导出中', ratio: 0, detail: '编码' } });
+    // 字体闸门：导出是逐帧跑完就封装，绝不能「前几帧用 fallback 字体」。
+    // 与预览调同一个函数（player.ensureFontsReady），只是这里要等它结束。
+    // 超时不阻断导出 —— 只把「这次可能用了替代字体」如实说出来。
+    const exportTextLayers = (clips || [])
+      .filter((c) => c && c.type === 'text')
+      .map((c) => ({ kind: 'text', clip: c }));
+    let fontsTimedOut = false;
+    try {
+      const fonts = await prepareFonts({ height: p.height, layers: exportTextLayers, timeoutMs: 2500 });
+      fontsTimedOut = !!(fonts && fonts.timedOut);
+    } catch {
+      fontsTimedOut = false;
+    }
     try {
       const result = await mod.exportTimeline({
         title: doc.title,
@@ -1545,11 +1640,12 @@ function Workbench(props) {
       const fallbackNote = result.encoderFallback && result.encoderFallback.note
         ? '；' + result.encoderFallback.note
         : '';
+      const fontNote = fontsTimedOut ? '；字体就绪超时，可能有镜头用了替代字体' : '';
       toast(
         '已导出 ' + result.fileName + '（' + result.container + ' · ' + p.width + '×' + p.height + ' · ' +
           (result.fps == null ? p.fps : result.fps) + 'fps' +
           (result.sourceFps != null && result.sourceFps !== result.fps ? '（工程 ' + result.sourceFps + 'fps）' : '') +
-          (result.audioCodec ? ' · ' + result.audioCodec : ' · 无音轨') + '）' + fallbackNote +
+          (result.audioCodec ? ' · ' + result.audioCodec : ' · 无音轨') + '）' + fallbackNote + fontNote +
           (savedToProject ? '，已登记进工程 exports/' : '，但没能登记进工程（用 video_export_scan 可发现并收养）'),
       );
     } catch (e) {

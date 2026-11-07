@@ -313,5 +313,38 @@ await check('⑬ 非法参数在开编码器之前就被拦下（不会碰 Video
   }
 });
 
+// ---- 导出表单：那一行「将导出」必须带分辨率/帧率，且探测有超时降级 ----
+// 表单逻辑在 client.js 里（React 组件内），这里对*构建产物*做结构性断言：
+// 符号在、顺序对，就说明用户打开表单看到的是这份逻辑，而不是旧结论。
+const bundle = (await import('node:fs')).readFileSync(new URL('../client.js', import.meta.url), 'utf8');
+
+await check('⑭ 表单那一行拼了分辨率与帧率（formatPlanLine ← formPixels/formFps）', async () => {
+  assert(bundle.includes('formatPlanLine'), 'bundle 里没有 formatPlanLine');
+  assert(bundle.includes('formPixels'), 'bundle 里没有 formPixels');
+  assert(bundle.includes('formFps'), 'bundle 里没有 formFps');
+  const iLine = bundle.indexOf('function formatPlanLine');
+  assert(iLine > 0, '没有 formatPlanLine 定义');
+  // esbuild 会把 × / · 转成 \xD7 / \xB7（ASCII 转义），所以断言要按转义后的形态找。
+  const window = bundle.slice(iLine, iLine + 600);
+  assert(window.includes('${size.width}\\xD7${size.height}'), '没有拼「宽×高」');
+  assert(window.includes('${formFps()}fps'), '没有拼帧率');
+  assert(window.includes('describePlan(plan)'), '没有拼编码组合（describePlan）');
+});
+
+await check('⑮ 探测超时是独立的降级态（不是失败、不阻塞导出）', async () => {
+  assert(bundle.includes('CAPS_TIMEOUT_MS'), 'bundle 里没有 CAPS_TIMEOUT_MS');
+  assert(bundle.includes('capsTimedOut'), 'bundle 里没有 capsTimedOut 状态');
+  const iTimeout = bundle.indexOf('capsTimedOut');
+  assert(iTimeout > 0 && bundle.indexOf('setCapsTimedOut(true)', iTimeout) > iTimeout, '超时分支没有落到 setCapsTimedOut');
+});
+
+await check('⑯ 导出前先过字体闸门，再调 exportTimeline', async () => {
+  const iFonts = bundle.indexOf('await prepareFonts(');
+  // 样片导出（style-preview）也调 exportTimeline，所以取**最后一次**才是主导出入口。
+  const iExport = bundle.lastIndexOf('mod.exportTimeline(');
+  assert(iFonts > 0, 'bundle 里没有 await prepareFonts(');
+  assert(iExport > iFonts, '字体闸门不在主导出 exportTimeline 之前');
+});
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail === 0 ? 0 : 1);

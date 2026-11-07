@@ -806,6 +806,167 @@ function fontStack(family) {
   return FONT_STACKS[family] || FONT_STACKS['system-ui'];
 }
 
+// ------------------------------------------------------- 像素对齐契约 ----
+//
+// 「导出的 MP4 里文字在抖，预览不抖」的根因不在编码器，而在两条渲染路径
+// 各自决定了坐标空间与对齐方式：
+//
+//   - 预览画布 960×540，导出 1920×1080；字号/基线用的是**绝对像素**，
+//     于是同一份文字在两条路径上占画面的比例不同（导出小一半）。
+//   - 基线 y = height * style.y 天然带小数（1080×0.82 = 885.6），x 也常是小数；
+//     字形落在半像素上，边缘抗锯齿每帧都要重采样。
+//   - 预览画布会被 CSS 缩小显示，缩小本身就是一次盒式平均，正好把 0.6px 的
+//     边缘起伏抹平；导出一比一像素输出，同样的起伏就看得见 —— 所以「预览稳、
+//     成片抖」。
+//
+// 这里定下一条**两路共用**的规则（导出、预览、无头采样都只走 drawFrame）：
+//
+//   1. 构图以 540p 为参考，字号按 height / 540 等比换算 —— 两条路径的构图
+//      比例一致（textPixels）。
+//   2. **静态几何**（锚点、基线静止位置、边距）取整到设备像素网格；
+//   3. **动画偏移**（关键帧的 x/y/scale、转场位移）保持连续，绝不逐帧取整。
+//
+// 第 2 条消除静止文字的半像素重采样；第 3 条保证运镜仍是连续位移 ——
+// 如果把带关键帧的坐标也取整，推镜就会变成「每帧跳一格」的卡顿。
+// 二者冲突时的取舍：静止部分对齐、运动部分连续。像素对齐只作用于不动的
+// 那条基准线，不作用于速度。
+
+/** 构图参考高度：预览画布为 540p，所有排版单位都以它为准。 */
+export const COMPOSE_REFERENCE_HEIGHT = 540;
+
+/** 设备像素对齐：只用于静态几何。NaN/Infinity 折成 0，渲染路径不因坏数据整帧黑。 */
+export function snapDevicePixel(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? Math.round(n) : 0;
+}
+
+/**
+ * 排版单位 → 设备像素。全工程唯一一处字号换算。
+ * 540p 时是 1:1（预览构图不变），1080p 时 ×2（与预览构图一致）。
+ */
+export function textPixels(sizeAtReference, height) {
+  const size = Number(sizeAtReference);
+  const h = Number(height);
+  if (!Number.isFinite(size) || size <= 0) return 12;
+  const scale = Number.isFinite(h) && h > 0 ? h / COMPOSE_REFERENCE_HEIGHT : 1;
+  return Math.max(1, Math.round(size * scale));
+}
+
+/**
+ * 一个文字图层的绘制几何。预览与导出都只从这里取坐标 —— 规则只有一份。
+ *
+ * @param {object} input { style, width, height, tf, layer }
+ * @returns {{x:number, y:number, fontPx:number, lineStep:number, margin:number, aligned:boolean}}
+ *   x/y 是**这一帧**的落点：静态部分已取整，动画部分连续。
+ */
+export function textAnchor(input = {}) {
+  const style = input.style || {};
+  const width = Number(input.width) || 0;
+  const height = Number(input.height) || 0;
+  const tf = input.tf || {};
+  const layer = input.layer || {};
+
+  const fontPx = textPixels(style.fontSize, height);
+  const margin = snapDevicePixel(width * 0.05);
+  const anchorX =
+    style.align === 'left' ? margin : style.align === 'right' ? snapDevicePixel(width - margin) : snapDevicePixel(width / 2);
+
+  // 静止基准取整；关键帧 / 转场带来的位移原样保留（连续）。
+  const restX = anchorX;
+  const restY = snapDevicePixel(height * (Number(style.y) || 0));
+  const dx = (Number(tf.x) || 0) + (Number(layer.dx) || 0) * width;
+  const dy = (Number(tf.y) || 0) + (Number(layer.dy) || 0) * height;
+
+  return {
+    x: restX + dx,
+    y: restY + dy,
+    fontPx,
+    // 行距也取整：多行文字每行都落在整像素上，行与行之间不会出现「有的行清楚、
+    // 有的行发虚」。字号本身已取整，所以这里不会把行距压成 0。
+    lineStep: Math.max(1, snapDevicePixel(fontPx * (Number(style.lineHeight) || 1.2))),
+    margin,
+    // 只有完全静止的图层才落在整像素上；有动画时如实报告 false（测试据此判定）。
+    aligned: dx === 0 && dy === 0,
+  };
+}
+
+/**
+ * 这一帧所有文字图层真正会用到的字体签名（给 FontFaceSet.load 预热）。
+ * 顺序去重，导出前一次性等它们就绪，避免「前几帧用 fallback 度量」。
+ */
+export function textFontSpecs(layers, height) {
+  const specs = [];
+  const seen = new Set();
+  for (const layer of layers || []) {
+    if (!layer || layer.kind !== 'text') continue;
+    const style = normalizeTextStyle((layer.clip && layer.clip.style) || {});
+    const spec = `${style.fontWeight} ${textPixels(style.fontSize, height)}px ${fontStack(style.fontFamily)}`;
+    if (seen.has(spec)) continue;
+    seen.add(spec);
+    specs.push(spec);
+  }
+  return specs;
+}
+
+/**
+ * 等字体就绪（预览与导出共用）。带超时：字体一直不就绪时不能让导出卡死。
+ *
+ * 为什么必须等：canvas 的 fillText 在字体还没进字形缓存时会先用 fallback 度量，
+ * 等字体到位后同一句话的宽度/基线都变 —— 逐帧画下来就是「前几帧字距不对」，
+ * 或者干脆整段字幕在跳。
+ *
+ * @param {object} [options] { specs, timeoutMs, fonts }
+ * @returns {Promise<{ok:boolean, timedOut:boolean, reason:string, specs:number}>}
+ */
+export async function ensureFontsReady(options = {}) {
+  const fonts =
+    options.fonts !== undefined
+      ? options.fonts
+      : typeof document !== 'undefined' && document
+        ? document.fonts
+        : null;
+  const specs = Array.isArray(options.specs) ? options.specs.filter((s) => typeof s === 'string' && s) : [];
+  const timeoutMs = Number.isFinite(options.timeoutMs) ? Number(options.timeoutMs) : 1500;
+
+  if (!fonts) return { ok: true, timedOut: false, reason: 'no-font-api', specs: specs.length };
+  if (fonts.status === 'loaded' && typeof fonts.ready !== 'undefined') {
+    // ready 已经 resolve 过也要把具体字重/字号预热一遍：status === 'loaded'
+    // 只说明已排队的字体加载完了，不代表这个字号已经被光栅化过。
+  }
+
+  const loadAll = async () => {
+    if (typeof fonts.load !== 'function') return;
+    await Promise.all(
+      specs.map((spec) =>
+        Promise.resolve(fonts.load(spec)).catch(() => {
+          /* 单个字体加载失败不该拖住整帧 */
+        }),
+      ),
+    );
+  };
+
+  let timer = null;
+  const timeout = new Promise((resolve) => {
+    timer = setTimeout(() => resolve('timeout'), timeoutMs);
+  });
+  try {
+    const work = (async () => {
+      await loadAll();
+      if (fonts.ready && typeof fonts.ready.then === 'function') await fonts.ready;
+      return 'ready';
+    })().catch(() => 'error');
+    const outcome = await Promise.race([work, timeout]);
+    return {
+      ok: outcome === 'ready',
+      timedOut: outcome === 'timeout',
+      reason: outcome === 'ready' ? 'ready' : outcome === 'timeout' ? 'timeout' : 'error',
+      specs: specs.length,
+    };
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
 /**
  * @param {CanvasRenderingContext2D} ctx
  * @param {object} view { clips, assets, t, width, height, layers?, codeCanvas?, codecs?, onMediaState? }
@@ -896,18 +1057,20 @@ export function drawFrame(ctx, view) {
     if (layer.clipRect) rectPath(ctx, layer.clipRect, width, height);
     ctx.globalAlpha = alpha;
     const style = normalizeTextStyle(c.style || {});
-    const size = style.fontSize;
-    ctx.font = `${style.fontWeight} ${size}px ${fontStack(style.fontFamily)}`;
+    // 坐标只在 textAnchor 一处算：字号等比换算 + 静态几何取整 + 动画偏移连续。
+    // 预览、导出、无头采样都经过这里，所以三路必然同一条规则。
+    const anchor = textAnchor({ style, width, height, tf, layer });
+    ctx.font = `${style.fontWeight} ${anchor.fontPx}px ${fontStack(style.fontFamily)}`;
     ctx.textAlign = style.align;
     ctx.textBaseline = 'middle';
-    const margin = Math.round(width * 0.05);
-    const anchorX =
-      style.align === 'left' ? margin : style.align === 'right' ? width - margin : width / 2;
-    const cx = anchorX + (tf.x || 0) + layer.dx * width;
-    const cy = height * style.y + (tf.y || 0) + layer.dy * height;
-    const lineGap = size * style.lineHeight;
+    const cx = anchor.x;
+    const cy = anchor.y;
+    const lineGap = anchor.lineStep;
     const lines = String(c.text || '').split('\n');
-    const firstY = cy - ((lines.length - 1) * lineGap) / 2;
+    // 静止的多行文字：首行基线也取整，行距是整数 → 每一行都在整像素上。
+    // 有动画时保持连续，不然多行字幕会跟着运镜一格一格跳。
+    const centered = cy - ((lines.length - 1) * lineGap) / 2;
+    const firstY = anchor.aligned ? snapDevicePixel(centered) : centered;
     ctx.fillStyle = style.color;
     if (style.stroke) {
       ctx.lineWidth = style.stroke.width;
@@ -942,8 +1105,17 @@ export function drawFrame(ctx, view) {
       if (layer.clipRect) rectPath(ctx, layer.clipRect, width, height);
       ctx.globalAlpha = alpha;
       ctx.translate(layer.dx * width, layer.dy * height);
+      // 代码图层画布按 960×540 光栅化（见 code-registry），画到更大的输出帧上
+      // 必然是放大。放大本身两条路径一样，但采样质量必须写死：默认值随浏览器变，
+      // 预览与导出可能一个用 bilinear、一个用 nearest，看起来就是「边缘在跳」。
+      ctx.imageSmoothingEnabled = true;
       try {
-        ctx.drawImage(canvas, 0, 0, width, height);
+        ctx.imageSmoothingQuality = 'high';
+      } catch {
+        /* 老浏览器没有这个属性，忽略 */
+      }
+      try {
+        ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, width, height);
       } catch {
         /* 帧未就绪 */
       }

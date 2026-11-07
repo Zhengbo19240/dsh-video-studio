@@ -375,7 +375,7 @@ brief 没满时 `enforce` 真拒（`brief-not-ready`）。`video_script_read` �
 推荐（交给 DSH 自己装，它会改 profile 的 `package.json` 与 bundles 列表）：
 
 ```
-plugin_manager install_bundle target="link:<本仓库绝对路径>/packages/video-brief"
+plugin_manager install_bundle target="link:dsh-video-brief（本仓库 packages/video-brief）"
 ```
 
 手工等价（三步，顺序不能反）：
@@ -383,7 +383,7 @@ plugin_manager install_bundle target="link:<本仓库绝对路径>/packages/vide
 ```powershell
 # 1) 在 profile 的 dependencies 里加 link:，并在 dsh.profile.bundles 里加 "dsh-video-brief"
 #    文件：~/.dsh\profiles\desktop\package.json
-#    "dsh-video-brief": "link:<本仓库绝对路径>/packages/video-brief"
+#    "dsh-video-brief": "link:dsh-video-brief（本仓库 packages/video-brief）"
 
 # 2) 装依赖（建 node_modules 里的 junction）
 cd ~/.dsh\profiles\desktop

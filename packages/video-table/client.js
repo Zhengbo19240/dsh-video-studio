@@ -6365,6 +6365,93 @@ var FONT_STACKS = {
 function fontStack(family) {
   return FONT_STACKS[family] || FONT_STACKS["system-ui"];
 }
+var COMPOSE_REFERENCE_HEIGHT = 540;
+function snapDevicePixel(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? Math.round(n) : 0;
+}
+function textPixels(sizeAtReference, height) {
+  const size = Number(sizeAtReference);
+  const h4 = Number(height);
+  if (!Number.isFinite(size) || size <= 0) return 12;
+  const scale = Number.isFinite(h4) && h4 > 0 ? h4 / COMPOSE_REFERENCE_HEIGHT : 1;
+  return Math.max(1, Math.round(size * scale));
+}
+function textAnchor(input = {}) {
+  const style = input.style || {};
+  const width = Number(input.width) || 0;
+  const height = Number(input.height) || 0;
+  const tf = input.tf || {};
+  const layer = input.layer || {};
+  const fontPx = textPixels(style.fontSize, height);
+  const margin = snapDevicePixel(width * 0.05);
+  const anchorX = style.align === "left" ? margin : style.align === "right" ? snapDevicePixel(width - margin) : snapDevicePixel(width / 2);
+  const restX = anchorX;
+  const restY = snapDevicePixel(height * (Number(style.y) || 0));
+  const dx = (Number(tf.x) || 0) + (Number(layer.dx) || 0) * width;
+  const dy = (Number(tf.y) || 0) + (Number(layer.dy) || 0) * height;
+  return {
+    x: restX + dx,
+    y: restY + dy,
+    fontPx,
+    // 行距也取整：多行文字每行都落在整像素上，行与行之间不会出现「有的行清楚、
+    // 有的行发虚」。字号本身已取整，所以这里不会把行距压成 0。
+    lineStep: Math.max(1, snapDevicePixel(fontPx * (Number(style.lineHeight) || 1.2))),
+    margin,
+    // 只有完全静止的图层才落在整像素上；有动画时如实报告 false（测试据此判定）。
+    aligned: dx === 0 && dy === 0
+  };
+}
+function textFontSpecs(layers, height) {
+  const specs = [];
+  const seen = /* @__PURE__ */ new Set();
+  for (const layer of layers || []) {
+    if (!layer || layer.kind !== "text") continue;
+    const style = normalizeTextStyle(layer.clip && layer.clip.style || {});
+    const spec = `${style.fontWeight} ${textPixels(style.fontSize, height)}px ${fontStack(style.fontFamily)}`;
+    if (seen.has(spec)) continue;
+    seen.add(spec);
+    specs.push(spec);
+  }
+  return specs;
+}
+async function ensureFontsReady(options = {}) {
+  const fonts = options.fonts !== void 0 ? options.fonts : typeof document !== "undefined" && document ? document.fonts : null;
+  const specs = Array.isArray(options.specs) ? options.specs.filter((s) => typeof s === "string" && s) : [];
+  const timeoutMs = Number.isFinite(options.timeoutMs) ? Number(options.timeoutMs) : 1500;
+  if (!fonts) return { ok: true, timedOut: false, reason: "no-font-api", specs: specs.length };
+  if (fonts.status === "loaded" && typeof fonts.ready !== "undefined") {
+  }
+  const loadAll = async () => {
+    if (typeof fonts.load !== "function") return;
+    await Promise.all(
+      specs.map(
+        (spec) => Promise.resolve(fonts.load(spec)).catch(() => {
+        })
+      )
+    );
+  };
+  let timer = null;
+  const timeout = new Promise((resolve) => {
+    timer = setTimeout(() => resolve("timeout"), timeoutMs);
+  });
+  try {
+    const work = (async () => {
+      await loadAll();
+      if (fonts.ready && typeof fonts.ready.then === "function") await fonts.ready;
+      return "ready";
+    })().catch(() => "error");
+    const outcome = await Promise.race([work, timeout]);
+    return {
+      ok: outcome === "ready",
+      timedOut: outcome === "timeout",
+      reason: outcome === "ready" ? "ready" : outcome === "timeout" ? "timeout" : "error",
+      specs: specs.length
+    };
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
 function drawFrame(ctx2, view2) {
   const { clips, assets, t, width, height } = view2;
   const layers = view2.layers || frameLayers(clips, t);
@@ -6434,17 +6521,16 @@ function drawFrame(ctx2, view2) {
     if (layer.clipRect) rectPath(ctx2, layer.clipRect, width, height);
     ctx2.globalAlpha = alpha;
     const style = normalizeTextStyle(c.style || {});
-    const size = style.fontSize;
-    ctx2.font = `${style.fontWeight} ${size}px ${fontStack(style.fontFamily)}`;
+    const anchor = textAnchor({ style, width, height, tf, layer });
+    ctx2.font = `${style.fontWeight} ${anchor.fontPx}px ${fontStack(style.fontFamily)}`;
     ctx2.textAlign = style.align;
     ctx2.textBaseline = "middle";
-    const margin = Math.round(width * 0.05);
-    const anchorX = style.align === "left" ? margin : style.align === "right" ? width - margin : width / 2;
-    const cx = anchorX + (tf.x || 0) + layer.dx * width;
-    const cy = height * style.y + (tf.y || 0) + layer.dy * height;
-    const lineGap = size * style.lineHeight;
+    const cx = anchor.x;
+    const cy = anchor.y;
+    const lineGap = anchor.lineStep;
     const lines = String(c.text || "").split("\n");
-    const firstY = cy - (lines.length - 1) * lineGap / 2;
+    const centered = cy - (lines.length - 1) * lineGap / 2;
+    const firstY = anchor.aligned ? snapDevicePixel(centered) : centered;
     ctx2.fillStyle = style.color;
     if (style.stroke) {
       ctx2.lineWidth = style.stroke.width;
@@ -6477,8 +6563,13 @@ function drawFrame(ctx2, view2) {
       if (layer.clipRect) rectPath(ctx2, layer.clipRect, width, height);
       ctx2.globalAlpha = alpha;
       ctx2.translate(layer.dx * width, layer.dy * height);
+      ctx2.imageSmoothingEnabled = true;
       try {
-        ctx2.drawImage(canvas, 0, 0, width, height);
+        ctx2.imageSmoothingQuality = "high";
+      } catch {
+      }
+      try {
+        ctx2.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, width, height);
       } catch {
       }
       ctx2.restore();
@@ -14185,6 +14276,13 @@ function SelectionPanel(props) {
 // src/client/frame-render.js
 var SAMPLE_WIDTH = 960;
 var SAMPLE_HEIGHT = 540;
+async function prepareFonts(input = {}) {
+  const layers = Array.isArray(input.layers) ? input.layers : null;
+  const height = Number(input.height) > 0 ? Number(input.height) : SAMPLE_HEIGHT;
+  let specs = Array.isArray(input.specs) ? input.specs : [];
+  if (!specs.length && layers) specs = textFontSpecs(layers, height);
+  return ensureFontsReady({ specs, timeoutMs: input.timeoutMs });
+}
 function sampleSize(maxDim) {
   const dim = Number(maxDim) > 0 ? Number(maxDim) : 640;
   const scale = Math.min(1, dim / SAMPLE_WIDTH);
@@ -14241,6 +14339,7 @@ async function renderTimelineFrame(input) {
     }
   }
   const mediaWarnings = [];
+  const fonts = await prepareFonts({ layers, height, timeoutMs: input.fontTimeoutMs });
   drawFrame(ctx2, {
     clips,
     assets,
@@ -14253,7 +14352,7 @@ async function renderTimelineFrame(input) {
       for (const item of diagnostics || []) mediaWarnings.push(item);
     }
   });
-  return { canvas, ctx: ctx2, width, height, layers, mediaWarnings };
+  return { canvas, ctx: ctx2, width, height, layers, mediaWarnings, fonts };
 }
 
 // src/client/sampler.js
@@ -17251,6 +17350,7 @@ function clipsToSrt(clips) {
 
 // src/client/main.js
 var OPTION_STYLE2 = { background: T.bg, color: T.text };
+var CAPS_TIMEOUT_MS = 1200;
 function h3(type, props, ...children) {
   if (type !== "select") return import_react3.default.createElement(type, props, ...children);
   const flat = [];
@@ -17442,11 +17542,18 @@ function PlayerCanvas({ clips, assets, playing, playhead, code, engineRef, onTim
     engine.setPlayhead(Number(playhead) || 0);
     if (state.playing) engine.play(state.playhead);
     else engine.refresh();
+    let dead = false;
+    const previewTextLayers = () => (viewRef.current.clips || []).filter((c) => c && c.type === "text").map((c) => ({ kind: "text", clip: c }));
+    prepareFonts({ height: H, layers: previewTextLayers(), timeoutMs: 1200 }).catch(() => null).then(() => {
+      const e = engineRef && engineRef.current;
+      if (!dead && e) e.refresh();
+    });
     const off = onMediaReady(() => {
       const e = engineRef && engineRef.current;
       if (e) e.refresh();
     });
     return () => {
+      dead = true;
       off();
       engine.dispose();
       if (engineRef) engineRef.current = null;
@@ -17485,6 +17592,7 @@ function Workbench(props) {
   const [caps, setCaps] = import_react3.default.useState(null);
   const [capsBusy, setCapsBusy] = import_react3.default.useState(false);
   const [capsError, setCapsError] = import_react3.default.useState(null);
+  const [capsTimedOut, setCapsTimedOut] = import_react3.default.useState(false);
   const [diag, setDiag] = import_react3.default.useState(null);
   const [textOpen, setTextOpen] = import_react3.default.useState(false);
   const [textValue, setTextValue] = import_react3.default.useState("");
@@ -18321,32 +18429,71 @@ function Workbench(props) {
   async function loadCaps() {
     setCapsBusy(true);
     setCapsError(null);
+    setCapsTimedOut(false);
+    let timer = null;
     try {
-      setCaps(await probeEncoders());
+      const capsOrTimeout = await Promise.race([
+        probeEncoders().then((value) => ({ value })),
+        new Promise((resolve) => {
+          timer = setTimeout(() => resolve({ timeout: true }), CAPS_TIMEOUT_MS);
+        })
+      ]);
+      if (capsOrTimeout.timeout) {
+        setCaps(null);
+        setCapsTimedOut(true);
+      } else {
+        setCaps(capsOrTimeout.value);
+      }
     } catch (e) {
       setCaps(null);
       setCapsError(e && e.message || "\u7F16\u7801\u80FD\u529B\u68C0\u6D4B\u5931\u8D25");
     } finally {
+      if (timer) clearTimeout(timer);
       setCapsBusy(false);
     }
   }
+  function formPixels() {
+    if (exportForm.resolution === "1080") return { width: 1920, height: 1080 };
+    if (exportForm.resolution === "720") return { width: 1280, height: 720 };
+    return projectPixels();
+  }
+  function formFps() {
+    const projectFps = doc && doc.fps || 30;
+    const fps = exportForm.fps === "project" ? projectFps : Number(exportForm.fps);
+    return Number.isFinite(fps) && fps > 0 ? fps : projectFps;
+  }
+  function formatPlanLine(plan) {
+    const size = formPixels();
+    const detail = describePlan(plan).replace(/^将导出：\s*/, "");
+    return `\u5C06\u5BFC\u51FA\uFF1A${size.width}\xD7${size.height} \xB7 ${formFps()}fps \xB7 ${detail}`;
+  }
   function exportPreview() {
-    if (capsBusy) return { text: "\u6B63\u5728\u68C0\u6D4B\u7F16\u7801\u80FD\u529B\u2026", tone: "muted", plan: null, blocked: false };
-    if (capsError) {
+    const size = formPixels();
+    const params = `${size.width}\xD7${size.height} \xB7 ${formFps()}fps`;
+    if (capsBusy) return { text: `\u6B63\u5728\u68C0\u6D4B\u7F16\u7801\u80FD\u529B\u2026\uFF08${params}\uFF09`, tone: "muted", plan: null, blocked: false };
+    if (capsTimedOut) {
       return {
-        text: "\u7F16\u7801\u80FD\u529B\u68C0\u6D4B\u5931\u8D25\uFF1A" + capsError + "\uFF1B\u5BFC\u51FA\u65F6\u4F1A\u6309\u8FD0\u884C\u65F6\u63A2\u6D4B\u7ED3\u679C\u9009\u683C\u5F0F",
+        text: `\u5C06\u5BFC\u51FA\uFF1A${params} \xB7 \u683C\u5F0F\u5F85\u5B9A\uFF08\u63A2\u6D4B\u8D85\u65F6\uFF0C\u5BFC\u51FA\u65F6\u518D\u5B9A\uFF09`,
         tone: "warn",
         plan: null,
         blocked: false
       };
     }
-    if (!caps) return { text: "\u6B63\u5728\u68C0\u6D4B\u7F16\u7801\u80FD\u529B\u2026", tone: "muted", plan: null, blocked: false };
+    if (capsError) {
+      return {
+        text: `\u7F16\u7801\u80FD\u529B\u68C0\u6D4B\u5931\u8D25\uFF1A${capsError}\uFF1B\u5C06\u5BFC\u51FA ${params}\uFF0C\u683C\u5F0F\u5728\u5BFC\u51FA\u65F6\u518D\u5B9A`,
+        tone: "warn",
+        plan: null,
+        blocked: false
+      };
+    }
+    if (!caps) return { text: `\u6B63\u5728\u68C0\u6D4B\u7F16\u7801\u80FD\u529B\u2026\uFF08${params}\uFF09`, tone: "muted", plan: null, blocked: false };
     try {
       const plan = chooseExportPlan(caps);
-      return { text: describePlan(plan), tone: plan.audioCodec ? "info" : "warn", plan, blocked: false };
+      return { text: formatPlanLine(plan), tone: plan.audioCodec ? "info" : "warn", plan, blocked: false };
     } catch (e) {
       return {
-        text: e && e.message || "\u5F53\u524D\u73AF\u5883\u6CA1\u6709\u53EF\u7528\u7684\u89C6\u9891\u7F16\u7801\u5668",
+        text: "\u8FD9\u53F0\u673A\u5668\u6CA1\u6709\u53EF\u7528\u7F16\u7801\u5668\uFF1AH.264 / HEVC / VP9 / AV1 \u5B9E\u6D4B\u90FD\u4E0D\u53EF\u7528\uFF0C\u5BFC\u51FA\u4F1A\u88AB\u62D2\u7EDD\u3002" + (e && e.message ? "\uFF08" + e.message + "\uFF09" : ""),
         tone: "error",
         plan: null,
         blocked: true
@@ -18408,6 +18555,14 @@ function Workbench(props) {
       }
     }
     setState({ busy: { label: "\u5BFC\u51FA\u4E2D", ratio: 0, detail: "\u7F16\u7801" } });
+    const exportTextLayers = (clips || []).filter((c) => c && c.type === "text").map((c) => ({ kind: "text", clip: c }));
+    let fontsTimedOut = false;
+    try {
+      const fonts = await prepareFonts({ height: p.height, layers: exportTextLayers, timeoutMs: 2500 });
+      fontsTimedOut = !!(fonts && fonts.timedOut);
+    } catch {
+      fontsTimedOut = false;
+    }
     try {
       const result = await mod.exportTimeline({
         title: doc.title,
@@ -18460,8 +18615,9 @@ function Workbench(props) {
         savedToProject = false;
       }
       const fallbackNote = result.encoderFallback && result.encoderFallback.note ? "\uFF1B" + result.encoderFallback.note : "";
+      const fontNote = fontsTimedOut ? "\uFF1B\u5B57\u4F53\u5C31\u7EEA\u8D85\u65F6\uFF0C\u53EF\u80FD\u6709\u955C\u5934\u7528\u4E86\u66FF\u4EE3\u5B57\u4F53" : "";
       toast(
-        "\u5DF2\u5BFC\u51FA " + result.fileName + "\uFF08" + result.container + " \xB7 " + p.width + "\xD7" + p.height + " \xB7 " + (result.fps == null ? p.fps : result.fps) + "fps" + (result.sourceFps != null && result.sourceFps !== result.fps ? "\uFF08\u5DE5\u7A0B " + result.sourceFps + "fps\uFF09" : "") + (result.audioCodec ? " \xB7 " + result.audioCodec : " \xB7 \u65E0\u97F3\u8F68") + "\uFF09" + fallbackNote + (savedToProject ? "\uFF0C\u5DF2\u767B\u8BB0\u8FDB\u5DE5\u7A0B exports/" : "\uFF0C\u4F46\u6CA1\u80FD\u767B\u8BB0\u8FDB\u5DE5\u7A0B\uFF08\u7528 video_export_scan \u53EF\u53D1\u73B0\u5E76\u6536\u517B\uFF09")
+        "\u5DF2\u5BFC\u51FA " + result.fileName + "\uFF08" + result.container + " \xB7 " + p.width + "\xD7" + p.height + " \xB7 " + (result.fps == null ? p.fps : result.fps) + "fps" + (result.sourceFps != null && result.sourceFps !== result.fps ? "\uFF08\u5DE5\u7A0B " + result.sourceFps + "fps\uFF09" : "") + (result.audioCodec ? " \xB7 " + result.audioCodec : " \xB7 \u65E0\u97F3\u8F68") + "\uFF09" + fallbackNote + fontNote + (savedToProject ? "\uFF0C\u5DF2\u767B\u8BB0\u8FDB\u5DE5\u7A0B exports/" : "\uFF0C\u4F46\u6CA1\u80FD\u767B\u8BB0\u8FDB\u5DE5\u7A0B\uFF08\u7528 video_export_scan \u53EF\u53D1\u73B0\u5E76\u6536\u517B\uFF09")
       );
     } catch (e) {
       reportError(e, "\u5BFC\u51FA\u5931\u8D25");
