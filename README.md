@@ -47,25 +47,7 @@
 
 ## 快速开始
 
-要求：Node.js ≥ 20；一个 Chromium 系浏览器（Chrome / Edge，用于无头渲帧与导出）；DeepSeek Harness 已安装并能加载本地 bundle。
-
-```bash
-git clone https://github.com/Zhengbo19240/dsh-video-studio
-cd <仓库目录>
-npm install          # 安装 workspace 依赖（esbuild / react 等）
-npm run build        # src/client/*.js → packages/video-table/client.js
-```
-
-`client.js` 是构建产物，**不入库**：它是几百 KB 的生成文件，每次改一行源码都会产生整文件 diff。拿到仓库后必须先 `npm run build`。
-
-安装到 DSH（两个插件分别装，路径用绝对路径）：
-
-```
-plugin_manager install_bundle target="link:<仓库绝对路径>/packages/video-table"
-plugin_manager install_bundle target="link:<仓库绝对路径>/packages/video-brief"
-```
-
-装完重启 DSH；客户端 bundle 随页面加载，之后改客户端要刷新页面。
+要求Deepseek版本大于0.2.1-rc5，添加插件：https://github.com/Zhengbo19240/dsh-video-studio
 
 ### 可选：浏览器路径
 
