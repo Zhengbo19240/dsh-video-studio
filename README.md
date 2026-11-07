@@ -258,7 +258,11 @@ node packages/video-table/scripts/undo-stack-test.mjs
 
 ## 许可
 
-本仓库原创代码采用 MIT，见 [LICENSE](LICENSE)。第三方动效卡、音效素材各自保留原许可：动效卡的汇总见 [packages/motion-lib/NOTICE.md](packages/motion-lib/NOTICE.md)（其中 77 张为非商用授权），音效来自 Kenney（CC0）。
+本仓库原创代码采用 MIT，见 [LICENSE](LICENSE)。
+
+- **动效卡**：66 张全部为可商用许可（Apache-2.0 / MIT / 原创），汇总见 [packages/motion-lib/NOTICE.md](packages/motion-lib/NOTICE.md)。**本仓库不含非商用素材**——曾有 82 张非商用卡（PolyForm / Shotcraft）已在发布前全部排除。
+- **音效**：来自 Kenney，CC0 1.0。
+- **agent 预设**：提示词文本随根 LICENSE 以 MIT 发布，见 [packages/video-preset/NOTICE.md](packages/video-preset/NOTICE.md)。
 
 ## 安全
 

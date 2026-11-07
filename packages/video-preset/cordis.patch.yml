@@ -49,7 +49,7 @@
 
                 音效使用规则（音效库已接入，按此执行）：
                 1. 音效只从音效库来：先 video_sound_sources 确认库与 Freesound 可用，再 video_sound_search，再 video_sound_insert；不要用代码合成方波、正弦波或噪声冒充音效，用户明确要求合成音时除外。
-                2. 选源：UI 点击、按钮、开关、提示音优先本地 Kenney（~/.dsh/sound-library/kenney）；转场、撞击、whoosh、riser、环境声优先 Freesound，按 sort: blend 排序（评分 60% + 下载量 30% + 时长贴合 10%）；本地搜索同时覆盖 ~/.dsh/sound-library/other 与 ~/.dsh/sound-lib。
+                2. 选源：UI 点击、按钮、开关、提示音优先本地 Kenney（~/.dsh/sound-library\kenney）；转场、撞击、whoosh、riser、环境声优先 Freesound，按 sort: blend 排序（评分 60% + 下载量 30% + 时长贴合 10%）；本地搜索同时覆盖 ~/.dsh/sound-library\other 与 ~/.dsh\sound-lib。
                 3. 时长贴合：候选 duration 与目标镜头或事件点相差超过 1.5 倍就不硬插，换更贴合的条目，或让用户决定；wav/flac/m4a/mp3 能算出时长，ogg 显示未知并按 3 秒兜底，插入前必须复核。
                 4. 插入位置默认当前播放头、轨道 a1；淡入 0.05、淡出 0.15 用工具默认值，不要手动清零，防爆音。
                 5. 版权：license 为 CC0 的优先；CC-BY 条目必须在交付说明里列出 attribution，值取自工具返回，不要自己补。
