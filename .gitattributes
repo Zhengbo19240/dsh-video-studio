@@ -1,0 +1,13 @@
+# 统一换行符，避免 Windows 上每次同步都出现「改了但内容一样」的噪音
+* text=auto eol=lf
+
+# 二进制，不做换行处理
+*.ogg binary
+*.wav binary
+*.mp3 binary
+*.flac binary
+*.m4a binary
+*.png binary
+*.jpg binary
+*.zip binary
+*.mp4 binary
