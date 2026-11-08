@@ -50,7 +50,11 @@
 
 要求 DeepSeek 版本 > `0.2.1-rc5`。插件来源：<https://github.com/Zhengbo19240/dsh-video-studio>
 
-这个仓库是 monorepo：**两个插件 + 两份数据**。一次装不全，按下面四步走。
+> **没有发布到 npm。** 安装方式是 clone 仓库 + 跑安装脚本（把三个插件 link 进 profile）。
+> 这意味着 `dsh plugin add dsh-video-suite` 这类按包名安装的命令**现在用不了**——依赖的三个子包不在 npm 上。
+> 什么时候发 npm 由维护者决定；在那之前，请走下面的第 1、2 步。
+
+这个仓库是 monorepo：**两个必需插件 + 一个可选预设 + 两份数据**。按下面四步走。
 
 ### 1. 取仓库、装依赖
 
