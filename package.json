@@ -36,5 +36,16 @@
     "video",
     "editor",
     "agent"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zhengbo19240/dsh-video-studio.git"
+  },
+  "homepage": "https://github.com/Zhengbo19240/dsh-video-studio#readme",
+  "bugs": {
+    "url": "https://github.com/Zhengbo19240/dsh-video-studio/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }

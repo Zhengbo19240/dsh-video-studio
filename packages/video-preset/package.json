@@ -1,11 +1,28 @@
 {
   "name": "dsh-video-preset",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
     }
-  }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zhengbo19240/dsh-video-studio.git",
+    "directory": "packages/video-preset"
+  },
+  "homepage": "https://github.com/Zhengbo19240/dsh-video-studio#readme",
+  "bugs": {
+    "url": "https://github.com/Zhengbo19240/dsh-video-studio/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "cordis.patch.yml",
+    "package.json",
+    "NOTICE.md"
+  ]
 }

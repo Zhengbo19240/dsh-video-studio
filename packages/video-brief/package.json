@@ -1,7 +1,6 @@
 {
   "name": "dsh-video-brief",
   "version": "0.3.0",
-  "private": true,
   "type": "module",
   "description": "DSH 插件（仅 host 侧）：视频任务的六阶段状态机（idle/clarify/script/style/locked/build）+ 10 槽位简报 + 分镜脚本确认 + 风格确认 + 按阶段门禁 —— 脚本没确认，不许渲染样片；风格没锁，时间线不许动；没进 build，不许导出",
   "main": "index.js",
@@ -39,5 +38,17 @@
     "bundle": {
       "patch": "./cordis.patch.yml"
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zhengbo19240/dsh-video-studio.git",
+    "directory": "packages/video-brief"
+  },
+  "homepage": "https://github.com/Zhengbo19240/dsh-video-studio#readme",
+  "bugs": {
+    "url": "https://github.com/Zhengbo19240/dsh-video-studio/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

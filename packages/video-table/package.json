@@ -1,7 +1,6 @@
 {
   "name": "dsh-video-workbench",
   "version": "0.2.0",
-  "private": true,
   "type": "module",
   "description": "Agent-native video workbench: one project document, shared by the conversation and the editor UI",
   "exports": {
@@ -39,5 +38,18 @@
   "dependencies": {
     "mp4-muxer": "^5.2.2",
     "webm-muxer": "^5.1.4"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zhengbo19240/dsh-video-studio.git",
+    "directory": "packages/video-table"
+  },
+  "homepage": "https://github.com/Zhengbo19240/dsh-video-studio#readme",
+  "bugs": {
+    "url": "https://github.com/Zhengbo19240/dsh-video-studio/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
