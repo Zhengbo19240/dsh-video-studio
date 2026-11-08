@@ -50,9 +50,8 @@
 
 要求 DeepSeek 版本 > `0.2.1-rc5`。插件来源：<https://github.com/Zhengbo19240/dsh-video-studio>
 
-> **没有发布到 npm。** 安装方式是 clone 仓库 + 跑安装脚本（把三个插件 link 进 profile）。
-> 这意味着 `dsh plugin add dsh-video-suite` 这类按包名安装的命令**现在用不了**——依赖的三个子包不在 npm 上。
-> 什么时候发 npm 由维护者决定；在那之前，请走下面的第 1、2 步。
+> **本仓库没有发布到 npm。** 安装方式是 clone 仓库 + 跑安装脚本（把插件 link 进 profile）。
+> 因此 `dsh plugin --profile desktop add dsh-video-suite` 这类按包名安装的命令用不了——依赖的子包不在 npm 上。
 
 这个仓库是 monorepo：**两个必需插件 + 一个可选预设 + 两份数据**。按下面四步走。
 
@@ -256,19 +255,6 @@ node packages/video-table/scripts/undo-stack-test.mjs
 
 这个系统的核心体验在**动态**里：一句话改完，时间线当场变。静态截图说明不了多少，所以不放图。
 装上之后自己开一个工程，两分钟能看出它和「生成一段 MP4」的工具差在哪。
-
-<!--
-发布者备忘（GitHub 不渲染这一段）：
-
-想补图时，用 `显示工作台的技术文件夹/capture-ui.mjs` 截真实界面，
-放到 docs/images/ ，把下面三行换成实际图片引用：
-
-  ![工作台](docs/images/workbench.png)      工作台面板：时间线 + 预览 + 检查器
-  ![agent 改片](docs/images/agent-edit.png)  对话里让 agent 改一个片段，面板同步变化
-  ![动效库](docs/images/motion-lib.png)      动效库列表与一张卡的预览
-
-原则：由发布者本人截真机界面，不用示意图、不用生成图凑数——读者一眼能看出真伪。
--->
 
 ---
 
