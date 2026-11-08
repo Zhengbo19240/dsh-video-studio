@@ -1,21 +1,40 @@
 {
   "name": "dsh-video-suite",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
-  "description": "DSH 的视频工作台、阶段机、动效库与音效索引 —— 一个工程文档，对话与界面共用",
+  "description": "DSH 视频工作台套件：面板 + 阶段机 + 动效库与音效索引，一份工程文档对话与界面共用",
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
   "workspaces": [
     "packages/*"
   ],
+  "dependencies": {
+    "dsh-video-workbench": "^0.2.0",
+    "dsh-video-brief": "^0.3.0"
+  },
   "engines": {
     "node": ">=20"
   },
+  "files": [
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "npm run build --workspace dsh-video-workbench",
-    "build:watch": "npm run build:watch --workspace dsh-video-workbench",
     "test": "npm run test --workspace dsh-video-brief",
     "test:table": "node packages/video-table/scripts/smoke.mjs",
     "sounds:download": "node packages/sound-library/scripts/download-sounds.mjs"
   },
-  "license": "MIT"
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "video",
+    "editor",
+    "agent"
+  ]
 }
