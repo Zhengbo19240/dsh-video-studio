@@ -64,7 +64,19 @@ npm install
 
 ### 2. 装三个插件
 
-三个都装，路径用**绝对路径**：
+**一条命令**（在仓库根目录执行，脚本会按绝对路径把三个插件 link 进 profile）：
+
+```bash
+# Windows
+powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
+
+# macOS / Linux
+bash ./scripts/install.sh
+```
+
+换 profile 或不要预设：`-Profile tui`、`-WithPreset:$false`；`PROFILE=tui WITH_PRESET=0`。
+
+**手动装**（三个都装，路径用绝对路径）：
 
 ```
 plugin_manager install_bundle target="link:<克隆目录>/packages/video-table"
